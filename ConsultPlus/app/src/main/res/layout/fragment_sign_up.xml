@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SignUpFragment">
+
+    <View
+        android:id="@+id/rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/rectangle" />
+
+    <View
+        android:id="@+id/ellipse"
+        android:layout_width="199dp"
+        android:layout_height="199dp"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="-40dp"
+        android:background="@drawable/eclipse"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp">
+
+        <View
+            android:id="@+id/vector"
+            android:layout_width="56dp"
+            android:layout_height="43dp"
+            android:background="@drawable/logo_consult"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/consult"
+            android:layout_width="150dp"
+            android:layout_height="38dp"
+            android:gravity="center_horizontal|top"
+            android:text="@string/consult"
+            android:layout_marginTop="3dp"
+            android:textAppearance="@style/Theme.ConsultPlus"
+
+            android:textSize="25sp"
+            android:fontFamily="@font/syntha"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="60sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/register_wi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|top"
+            android:text="@string/register_with_us"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:fontFamily="@font/poppins_bold"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:id="@+id/your_inform"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/information_is_safe_with_us"
+            android:textColor="@color/black"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="15sp"
+            android:layout_gravity="center"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            />
+
+        <EditText
+            android:id="@+id/etFullName"
+            android:layout_width="300sp"
+            android:layout_height="50dp"
+            android:background="@drawable/input_background"
+            android:hint="Enter your full name"
+
+            android:textColorHint="@color/hint_text"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="10sp"
+            android:layout_gravity="center"
+            android:inputType="text"
+
+            android:paddingLeft="32sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="300sp"
+            android:layout_height="50dp"
+            android:background="@drawable/input_background"
+            android:textColorHint="@color/hint_text"
+
+            android:hint="Enter your email"
+            android:layout_gravity="center"
+            android:inputType="textEmailAddress"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="10sp"
+            android:paddingLeft="32sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="300sp"
+            android:layout_height="50dp"
+            android:background="@drawable/input_background"
+            android:textColorHint="@color/hint_text"
+
+            android:hint="Enter your password"
+            android:layout_gravity="center"
+            android:inputType="textPassword"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="10sp"
+            android:paddingLeft="32sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30sp"
+            />
+
+        <EditText
+            android:layout_width="300sp"
+            android:layout_height="50dp"
+            android:background="@drawable/input_background"
+            android:textColorHint="@color/hint_text"
+
+            android:hint="Confirm your password"
+            android:layout_gravity="center"
+            android:inputType="textPassword"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="10sp"
+            android:paddingLeft="32sp"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            />
+
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="280sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_rectangle"
+            android:layout_gravity="center"
+
+            android:text="Sign Up"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="12sp"
+            />
+
+        <LinearLayout
+            android:layout_marginTop="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Already have an account ?  "
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="13sp"
+
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign in"
+                android:textStyle="bold"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="13sp"
+
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

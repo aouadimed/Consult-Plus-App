@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ConsultPlus</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="consult">CONSULT</string>
+    <string name="register_with_us">Register With Us!</string>
+    <string name="information_is_safe_with_us">Information is safe with us</string>
+</resources>
