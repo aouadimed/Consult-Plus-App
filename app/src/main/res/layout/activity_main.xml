@@ -13,4 +13,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="211dp"
-        tools:layout_editor_absoluteY="345dp" /></androidx.appcompat.widget.LinearLayoutCompat>
+        tools:layout_editor_absoluteY="345dp" />
+</androidx.appcompat.widget.LinearLayoutCompat>

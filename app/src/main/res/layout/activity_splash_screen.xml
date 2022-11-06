@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreenActivity">
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".SplashScreenActivity"
+    android:background="@color/light_blue">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+
+        android:layout_width="250sp"
+        android:layout_height="250sp"
+        app:lottie_rawRes="@raw/doctor"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
