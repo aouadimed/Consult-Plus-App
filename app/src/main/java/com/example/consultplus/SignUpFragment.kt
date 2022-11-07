@@ -1,32 +1,36 @@
 package com.example.consultplus
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
+import com.example.consultplus.retrofit.Request
+import com.example.consultplus.retrofit.retrofit
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
+import retrofit2.Retrofit
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SignUpFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private lateinit var tvSignIn: TextView
+    private lateinit var btnSignUp: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -34,26 +38,66 @@ class SignUpFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
+        val email: EditText = view.findViewById(R.id.etEmail)
+        val fullname: EditText = view.findViewById(R.id.etFullName)
+        val password: EditText = view.findViewById(R.id.etPassword)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        fun ServiceSignuP(name:String,email:String,password:String) {
+            // Create Retrofit
+            val retrofit: Retrofit = retrofit.getInstance()
+            val service: Request = retrofit.create(Request::class.java)
+            // Create JSON using JSONObject
+            val jsonObject = JSONObject()
+            jsonObject.put("name", name)
+            jsonObject.put("email", email)
+            jsonObject.put("password", password)
+
+
+
+            // Convert JSONObject to String
+            val jsonObjectString = jsonObject.toString()
+            // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
+            val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+            CoroutineScope(Dispatchers.IO).launch {
+                // Do the POST request and get response
+                val response = service.Signup(requestBody)
+                withContext(Dispatchers.Main) {
+                    if (response.isSuccessful) {
+                        // Convert raw JSON to pretty JSON using GSON library
+                        val gson = GsonBuilder().setPrettyPrinting().create()
+                        val prettyJson = gson.toJson(JsonParser.parseString(response.body()?.string()))
+                        Log.d("Pretty Printed JSON :", prettyJson)
+                        Toast.makeText(context, "User ajouter"+password, Toast.LENGTH_SHORT).show()
+                        // GoToLogin(this@sign_up) //GoTo Page Home
+
+                    } else {
+                        Log.e("RETROFIT_ERROR", response.code().toString())
+                    }
                 }
             }
+        }
+        tvSignIn = view.findViewById(R.id.tvSignIn)
+
+        btnSignUp = view.findViewById(R.id.button)
+        tvSignIn.setOnClickListener {
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.fragment2, SignInFragment())
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
+        btnSignUp.setOnClickListener{
+            ServiceSignuP(fullname.text.toString().trim(),email.text.toString().trim(),password.text.toString().trim())
+        }
+
+
+
+
+
+
+
+    return view
     }
+
 }

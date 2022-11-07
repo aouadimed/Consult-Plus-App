@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignInFragment">
 
     <View
         android:id="@+id/rectangle"
@@ -62,48 +63,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal|top"
-            android:text="@string/register_with_us"
+            android:text="@string/welcome_back"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:fontFamily="@font/poppins_bold"
             android:textStyle="bold"
             android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/your_inform"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/information_is_safe_with_us"
-            android:textColor="@color/black"
-            android:fontFamily="@font/roboto_regular"
-            android:textSize="15sp"
-            android:layout_gravity="center"/>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40sp"
             />
 
-        <EditText
-            android:id="@+id/etFullName"
-            android:layout_width="300sp"
-            android:layout_height="50dp"
-            android:background="@drawable/input_background"
-            android:hint="Enter your full name"
-            android:textColorHint="@color/hint_text"
-            android:fontFamily="@font/roboto_regular"
-            android:textSize="10sp"
-            android:layout_gravity="center"
-            android:inputType="text"
 
-            android:paddingLeft="32sp"
-            />
+        <View
+
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:background="@drawable/undraw_login_screen"
+            android:layout_gravity="center"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30sp"
+            android:layout_height="40sp"
             />
-
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="300sp"
@@ -118,10 +103,14 @@
             android:textSize="10sp"
             android:paddingLeft="32sp"
             />
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="30sp"
             />
+
+
 
         <EditText
             android:id="@+id/etPassword"
@@ -141,20 +130,18 @@
             android:layout_width="match_parent"
             android:layout_height="30sp"
             />
-
-        <EditText
-            android:layout_width="300sp"
-            android:layout_height="50dp"
-            android:background="@drawable/input_background"
-            android:textColorHint="@color/hint_text"
-
-            android:hint="Confirm your password"
-            android:layout_gravity="center"
-            android:inputType="textPassword"
+        <TextView
+            android:id="@+id/forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|top"
+            android:text="@string/forgot_password"
+            android:textColor="@color/light_blue"
+            android:textSize="15sp"
             android:fontFamily="@font/roboto_regular"
-            android:textSize="10sp"
-            android:paddingLeft="32sp"
-            />
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40sp"
@@ -162,13 +149,13 @@
 
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/bt_sign_in"
             android:layout_width="280sp"
             android:layout_height="wrap_content"
             android:background="@drawable/bt_rectangle"
             android:layout_gravity="center"
 
-            android:text="Sign Up"
+            android:text="Sign In"
             android:fontFamily="@font/poppins_bold"
             android:textSize="12sp"
             />
@@ -183,7 +170,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Already have an account ?  "
+                android:text="Don't have an account ?  "
                 android:textColor="@color/black"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="13sp"
@@ -191,10 +178,10 @@
                 />
 
             <TextView
-                android:id="@+id/tvSignIn"
+                android:id="@+id/tvSignUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign in"
+                android:text="Sign up"
                 android:textStyle="bold"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="13sp"
@@ -204,7 +191,5 @@
 
 
     </LinearLayout>
-
-
 
 </FrameLayout>
