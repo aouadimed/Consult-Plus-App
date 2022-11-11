@@ -6,11 +6,12 @@
 
         android:title="Home" />
     <item
-        android:id="@+id/userListFragment"
 
-        android:title="Chat" />
+
+        android:title="profil" />
     <item
-        android:id="@+id/profilFragment"
+        android:id="@+id/sign_out"
+        android:icon="@drawable/ic_logout"
+        android:title="sign out" />
 
-        android:title="Profil" />
 </menu>

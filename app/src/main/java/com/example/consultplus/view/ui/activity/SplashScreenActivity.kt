@@ -1,11 +1,11 @@
-package com.example.consultplus
+package com.example.consultplus.view.ui.activity
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
+import com.example.consultplus.R
 
 class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,14 +13,15 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         preferences = getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        val email = preferences.getString("EmailUser","")
+        val isloged = preferences.getBoolean("isloged",false)
         Handler().postDelayed({
-            if (email != null) {
-                val intent = Intent(this@SplashScreenActivity,MainActivity::class.java)
+            if (isloged) {
+
+                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }else {
-                val intent = Intent(this@SplashScreenActivity,AuthActivity::class.java)
+                val intent = Intent(this@SplashScreenActivity, AuthActivity::class.java)
                 startActivity(intent)
                 finish()
             }

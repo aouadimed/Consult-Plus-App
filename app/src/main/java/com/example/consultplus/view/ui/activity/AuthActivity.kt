@@ -1,8 +1,8 @@
-package com.example.consultplus
+package com.example.consultplus.view.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import com.example.consultplus.R
 
 class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

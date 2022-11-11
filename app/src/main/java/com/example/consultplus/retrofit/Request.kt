@@ -15,4 +15,8 @@ interface Request {
     @POST("signup")
     suspend fun Signup(@Body requestBody: RequestBody): Response<ResponseBody>
 
+    @POST("userdata")
+    suspend fun GetUser(User: String): Response<User>
+
+
 }

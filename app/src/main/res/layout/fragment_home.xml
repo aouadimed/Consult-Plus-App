@@ -1,14 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.ui.fragment.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    tools:viewBindingIgnore="true"
+    tools:context=".view.ui.fragment.HomeFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content" >
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+
+        >
+
+        <androidx.cardview.widget.CardView
+
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+            <View
+                android:id="@+id/ellipse"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:background="@drawable/eclipse_2"
+                />
+            <ImageView
+                android:id="@+id/img_usr"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/baseline_person"
+                android:layout_gravity="center|end"
+                android:layout_marginTop="5sp"
+                android:layout_marginEnd="20dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10sp"
+            android:layout_gravity="center|top"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hello_"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                />
+            <TextView
+                android:id="@+id/full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold"
+                />
+
+
+
+        </LinearLayout>
+
+        <AutoCompleteTextView
+            android:layout_gravity="center|top"
+            android:layout_marginTop="110dp"
+            android:id="@+id/searshbar"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:background="@drawable/searsh_bar"
+            android:paddingStart="15sp"
+            android:paddingEnd="15sp"
+            android:elevation="10dp"
+            android:drawablePadding="15dp"
+            android:drawableStart="@drawable/searsh_icon"
+            android:hint="@string/search_by_doctors_or_diseases"/>
+
+
+        <LinearLayout
+            android:layout_marginTop="170dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="start"
+
+
+
+            >
+            <TextView
+                android:layout_marginStart="23dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|top"
+                android:text="@string/most_popular"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="5dp"
+                android:id="@+id/boxRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                tools:listitem="@layout/most_popular_layout"
+                tools:orientation="horizontal"
+                android:scrollbars="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mm"
+            android:layout_marginTop="390dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center|top"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/test_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_test_results"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/testRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                tools:listitem="@layout/test_layout"
+                android:clickable="true"
+                android:focusable="true"
+ />
+            <TextView
+                android:id="@+id/test_title_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="Show more test ...."
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15sp"
+
+                />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20sp"
+                    android:elevation="30dp"
+                app:cardCornerRadius="30sp"
+                android:background="@drawable/searsh_bar">
+
+                <LinearLayout
+                    android:layout_margin="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Instant Appointment"
+                            android:textColor="#000000"
+
+                            android:textSize="15sp"
+                            android:fontFamily="@font/poppins_bold"
+                            />
+
+
+                        <TextView
+                            android:layout_width="160dp"
+                            android:layout_height="wrap_content"
+                            android:text="Lorem ipsum dolor sit amet, consectetur.
+"
+                            android:textColor="#000000"
+
+                            android:textSize="15sp"
+                            android:fontFamily="@font/roboto_regular"
+                            />
+
+                        <Button
+                            android:layout_marginTop="10sp"
+                            android:id="@+id/button"
+                            android:layout_width="105dp"
+                            android:layout_height="32sp"
+                            android:background="@drawable/bt_rectangle"
+                            android:layout_gravity="center_horizontal"
+                            android:textSize="8sp"
+                            android:text="Learn more"
+                            android:fontFamily="@font/roboto_regular"
+
+                            />
+
+
+
+
+
+
+
+                    </LinearLayout>
+
+
+
+                    <View
+                        android:layout_width="130dp"
+                        android:layout_height="92dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/undraw_medicine"
+                        />
+
+
+                </LinearLayout>
+
+
+
+
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</ScrollView>

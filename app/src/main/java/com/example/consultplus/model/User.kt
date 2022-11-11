@@ -3,7 +3,7 @@ package com.example.consultplus.model
 class User()
 {
     internal var id : String ?= null
-    internal var fullname: String? = null
+    internal var name: String? = null
     internal var email: String? = null
     internal var password: String? = null
 
@@ -18,12 +18,12 @@ class User()
         id = newId
     }
     // Getter name
-    fun getFullName(): String? {
-        return fullname
+    fun getFullname(): String? {
+        return name
     }
     // Setter name
-    fun setFullName(newfullname: String?) {
-        fullname = newfullname
+    fun setFullname(newfullname: String?) {
+        name = newfullname
     }
 
     // Getter email

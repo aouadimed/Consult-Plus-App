@@ -4,11 +4,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ui.fragment.WelcomeFragment">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+  >
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+       >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        <View
+            android:id="@+id/vector"
+            android:layout_width="70dp"
+            android:layout_height="55dp"
+            android:background="@drawable/logo_consult"
+            android:layout_gravity="center"/>
 
+        <TextView
+            android:id="@+id/consult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal|top"
+            android:text="@string/consult"
+            android:layout_marginStart="7dp"
+            android:layout_marginBottom="2dp"
+            android:textAppearance="@style/Theme.ConsultPlus"
+            android:textSize="35sp"
+            android:fontFamily="@font/oswald_semibold"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"/>
+<View
+    android:layout_width="300dp"
+    android:layout_height="220dp"
+    android:layout_gravity="center"
+    android:background="@drawable/undraw_doctors"
+
+    />
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Consult Specialist Doctors
+Securely And Privately"
+            android:textAppearance="@style/Theme.ConsultPlus"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+
+
+            />
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="70dp"
+            android:orientation="vertical"
+            android:layout_gravity="center"/>
+        <Button
+            android:id="@+id/button"
+            android:layout_width="280sp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bt_rectangle"
+            android:layout_gravity="center"
+
+            android:text="Get Started"
+            android:fontFamily="@font/poppins_bold"
+            android:textSize="12sp"
+            />
+
+
+    </LinearLayout>
 </FrameLayout>

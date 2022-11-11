@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".SignInFragment">
+    tools:context=".view.ui.fragment.SignInFragment">
 
     <View
         android:id="@+id/rectangle"
@@ -17,8 +17,7 @@
         android:id="@+id/ellipse"
         android:layout_width="199dp"
         android:layout_height="199dp"
-        android:layout_marginStart="245dp"
-        android:layout_marginTop="-40dp"
+        android:layout_gravity="end|top"
         android:background="@drawable/eclipse"
         />
 

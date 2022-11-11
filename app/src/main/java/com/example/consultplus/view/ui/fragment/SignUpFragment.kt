@@ -1,5 +1,9 @@
-package com.example.consultplus
+package com.example.consultplus.view.ui.fragment
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,8 +15,11 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
+import com.example.consultplus.R
 import com.example.consultplus.retrofit.Request
-import com.example.consultplus.retrofit.retrofit
+import com.example.consultplus.retrofit.Retrofit
+import com.example.consultplus.view.ui.activity.MainActivity
+import com.example.consultplus.view.ui.activity.preferences
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import kotlinx.coroutines.CoroutineScope
@@ -22,7 +29,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import retrofit2.Retrofit
+
 
 
 class SignUpFragment : Fragment() {
@@ -42,10 +49,10 @@ class SignUpFragment : Fragment() {
         val email: EditText = view.findViewById(R.id.etEmail)
         val fullname: EditText = view.findViewById(R.id.etFullName)
         val password: EditText = view.findViewById(R.id.etPassword)
-
+        preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         fun ServiceSignuP(name:String,email:String,password:String) {
             // Create Retrofit
-            val retrofit: Retrofit = retrofit.getInstance()
+            val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
             val service: Request = retrofit.create(Request::class.java)
             // Create JSON using JSONObject
             val jsonObject = JSONObject()
@@ -68,11 +75,16 @@ class SignUpFragment : Fragment() {
                         val gson = GsonBuilder().setPrettyPrinting().create()
                         val prettyJson = gson.toJson(JsonParser.parseString(response.body()?.string()))
                         Log.d("Pretty Printed JSON :", prettyJson)
-                        Toast.makeText(context, "User ajouter"+password, Toast.LENGTH_SHORT).show()
-                        // GoToLogin(this@sign_up) //GoTo Page Home
+                        Toast.makeText(context, "User ajouter", Toast.LENGTH_SHORT).show()
+                        val editor: SharedPreferences.Editor = preferences.edit()
+                        editor.putString("EmailUser",email)
+                        editor.putBoolean("isloged",true)
+                        editor.apply()  //Save Data
+                        GoToHome()
 
                     } else {
                         Log.e("RETROFIT_ERROR", response.code().toString())
+                        preferences.edit().clear().apply()
                     }
                 }
             }
@@ -99,5 +111,12 @@ class SignUpFragment : Fragment() {
 
     return view
     }
+    fun GoToHome() {
 
+        val thisActivity: Activity? = activity
+        if (thisActivity != null) {
+            startActivity(Intent(thisActivity, MainActivity::class.java)) // if needed
+            thisActivity.finish()
+        }
+    }
 }

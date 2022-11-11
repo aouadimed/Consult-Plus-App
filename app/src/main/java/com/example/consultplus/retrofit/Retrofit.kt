@@ -5,7 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object retrofit {
+object Retrofit {
 
     fun getInstance(): Retrofit {
         var mHttpLoggingInterceptor = HttpLoggingInterceptor()
@@ -18,7 +18,7 @@ object retrofit {
 
 
         var retrofit: Retrofit = retrofit2.Retrofit.Builder()
-            .baseUrl("http:/192.168.153.151:5000/")
+            .baseUrl("http:/192.168.1.14:5000/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(mOkHttpClient)
             .build()

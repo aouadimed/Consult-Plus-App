@@ -1,4 +1,4 @@
-package com.example.consultplus
+package com.example.consultplus.view.ui.fragment
 
 import android.app.Activity
 import android.content.Context
@@ -15,20 +15,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.consultplus.R
+import com.example.consultplus.view.ui.activity.MainActivity
 import com.example.consultplus.model.User
 import com.example.consultplus.retrofit.Request
-import com.example.consultplus.retrofit.retrofit
+import com.example.consultplus.retrofit.Retrofit
+import com.example.consultplus.view.ui.activity.preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Retrofit
+
 
 
 class SignInFragment : Fragment() {
 
     private lateinit var btnLogin: Button
-    lateinit var sharedPreferences: SharedPreferences
     private lateinit var tvSignUp: TextView
     private lateinit var edtforgot_password: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,7 +56,7 @@ class SignInFragment : Fragment() {
 
         fun ServiceLogin(email: String, password: String) {
             // Create Retrofit
-            val retrofit: Retrofit = retrofit.getInstance()
+            val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
 
             val service: Request = retrofit.create(Request::class.java)
             val User = User()
@@ -65,13 +67,14 @@ class SignInFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 // Do the POST request and get response
                 val response = service.Login(User)
-                sharedPreferences =
-                    requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
+                preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
                 try {
                     withContext(Dispatchers.Main) {
                         if (response.isSuccessful) {
-                            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                            val editor: SharedPreferences.Editor = preferences.edit()
                             editor.putString("EmailUser", response.body()?.getEmail())
+                            editor.putBoolean("isloged",true)
+
                             println("Email ====>>>>> " + response.body()?.getEmail())
                             editor.apply()  //Save Data
                             Log.d("ID_USER", "ID_USER : ${response.body()?.getId()}")
@@ -82,7 +85,7 @@ class SignInFragment : Fragment() {
                         } else {
                             Log.e("RETROFIT_ERROR", response.code().toString())
                             println("Message :" + response.errorBody()?.string())
-                            sharedPreferences.edit().clear().apply()
+                            preferences.edit().clear().apply()
 
                         }
                     }
@@ -114,22 +117,7 @@ class SignInFragment : Fragment() {
 
     }
 
-    /*  private fun validate(): Boolean {
 
-
-        if (edtEmail.text!!.isEmpty()){
-
-
-            return false
-        }
-
-        if (edtPassword.text!!.isEmpty()){
-
-            return false
-        }
-
-        return true
-    }*/
     fun GoToHome() {
 
             val thisActivity: Activity? = activity
@@ -137,11 +125,6 @@ class SignInFragment : Fragment() {
                 startActivity(Intent(thisActivity, MainActivity::class.java)) // if needed
                 thisActivity.finish()
             }
-         //   putExtra("CURRENT_EMAIL",email)
-         //   Log.d("email","$email : from login activity ")
-
-
-
     }
 
 }
