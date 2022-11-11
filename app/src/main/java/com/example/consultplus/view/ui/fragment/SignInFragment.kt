@@ -1,5 +1,6 @@
 package com.example.consultplus
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -25,7 +26,6 @@ import retrofit2.Retrofit
 
 
 class SignInFragment : Fragment() {
-
 
     private lateinit var btnLogin: Button
     lateinit var sharedPreferences: SharedPreferences
@@ -71,18 +71,14 @@ class SignInFragment : Fragment() {
                     withContext(Dispatchers.Main) {
                         if (response.isSuccessful) {
                             val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                           //response.body()?.getId()
-                            editor.putString("id", response.body()?.getId())
-                            editor.putString("NameUser", response.body()?.getFullName())
-                            editor.putString("password", password)
                             editor.putString("EmailUser", response.body()?.getEmail())
                             println("Email ====>>>>> " + response.body()?.getEmail())
                             editor.apply()  //Save Data
                             Log.d("ID_USER", "ID_USER : ${response.body()?.getId()}")
                             //  println("Token =============>>>>>>>>>  "+response.body()?.string())
-                        //    GoToHome(email)==
-                            Toast.makeText(context, "User exist"+response.body()?.getId(), Toast.LENGTH_SHORT).show()
 
+                            Toast.makeText(context, "User exist"+response.body()?.getId(), Toast.LENGTH_SHORT).show()
+                            GoToHome()
                         } else {
                             Log.e("RETROFIT_ERROR", response.code().toString())
                             println("Message :" + response.errorBody()?.string())
@@ -134,13 +130,18 @@ class SignInFragment : Fragment() {
 
         return true
     }*/
-    fun GoToHome(email : String) {
-        val intent: Intent = Intent(activity, MainActivity::class.java).apply {
-            putExtra("CURRENT_EMAIL",email)
-            Log.d("email","$email : from login activity ")
+    fun GoToHome() {
 
-        }
-        startActivity(intent)
+            val thisActivity: Activity? = activity
+            if (thisActivity != null) {
+                startActivity(Intent(thisActivity, MainActivity::class.java)) // if needed
+                thisActivity.finish()
+            }
+         //   putExtra("CURRENT_EMAIL",email)
+         //   Log.d("email","$email : from login activity ")
+
+
+
     }
 
 }
