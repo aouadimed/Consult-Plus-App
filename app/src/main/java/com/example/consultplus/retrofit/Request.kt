@@ -9,14 +9,21 @@ import retrofit2.http.*
 
 
 interface Request {
-    @POST("signin")
+    @POST("login")
     suspend fun Login(@Body User: User): Response<User>
 
-    @POST("signup")
+    @POST("register")
     suspend fun Signup(@Body requestBody: RequestBody): Response<ResponseBody>
 
     @POST("userdata")
-    suspend fun GetUser(User: String): Response<User>
+    suspend fun GetUser(@Body User: User): Response<User>
 
+    @POST("edituser")
+    suspend fun UpdateClinet(@Body requestBody: RequestBody): Response<ResponseBody>
 
+    @POST("editmedecin")
+    suspend fun UpdateDoctor(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @POST("editrole")
+    suspend fun SetRole(@Body requestBody: RequestBody): Response<ResponseBody>
 }

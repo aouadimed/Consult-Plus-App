@@ -6,6 +6,10 @@ class User()
     internal var name: String? = null
     internal var email: String? = null
     internal var password: String? = null
+    internal var gender: String? = null
+    internal var dateofbirth: String? = null
+    internal var adresse: String? = null
+    internal var role: String? = null
 
 
 
@@ -44,5 +48,36 @@ class User()
         password = newPassword
     }
 
+    // Getter password
+    fun getGender(): String? {
+        return gender
+    }
+    // Setter password
+    fun setGender(newgender: String?) {
+        gender = newgender
+    }
 
+    fun getDateofbirth(): String? {
+        return dateofbirth
+    }
+    // Setter password
+    fun setDateofbirth(newdateofbirth: String?) {
+        dateofbirth = newdateofbirth
+    }
+
+    fun getAdresse(): String? {
+        return adresse
+    }
+    // Setter password
+    fun setAdresse(newadresse: String?) {
+        adresse = newadresse
+    }
+
+    fun getRole(): String? {
+        return role
+    }
+    // Setter password
+    fun setRole(newrole: String?) {
+        role = newrole
+    }
 }

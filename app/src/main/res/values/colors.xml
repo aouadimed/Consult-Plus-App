@@ -9,4 +9,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="hint_text">#333231</color>
     <color name="light_blue">#7C99E4</color>
+    <color name="blue">#FF005a9c</color>
+    <color name="lightBlue">#ff6691c4</color>
+    <color name="lighterBlue">#ffcdd8ec</color>
+    <color name="controlBackground">#ffffffff</color>
 </resources>

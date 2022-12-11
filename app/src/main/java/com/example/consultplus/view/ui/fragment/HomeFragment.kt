@@ -34,11 +34,12 @@ class HomeFragment : Fragment() {
     lateinit var recylceTestAdapter: TestAdapter
     lateinit var recylcerTest: RecyclerView
 
-    lateinit var sharedPreferences: SharedPreferences
-    internal var email: String? = null
+
     private lateinit var nameTag: TextView
     private lateinit var test_tile: TextView
     private lateinit var test_tile_2: TextView
+    lateinit var sharedPreferences: SharedPreferences
+    internal var email: String? = null
     private  var user = User()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,12 +107,12 @@ class HomeFragment : Fragment() {
 
         recylcerTest = view.findViewById(R.id.testRecyclerView)
         test_tile = view.findViewById(R.id.test_title)
-        test_tile_2 = view.findViewById(R.id.test_title_2)
+
 
 
         var TestList : MutableList<TestObject> = ArrayList()
 
-/*
+
         TestList.add(TestObject(test_name = "General blood analysis", test_status = "ready" ))
         TestList.add(TestObject(test_name = "Antibody test COVID-19", test_status = "in the process" ))
 
@@ -124,9 +125,9 @@ class HomeFragment : Fragment() {
 
         recylcerTest.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL ,false)
 
-*/
-        test_tile.visibility = View.INVISIBLE
-        test_tile_2.visibility = View.INVISIBLE
+
+       // test_tile.visibility = View.INVISIBLE
+
 
 
         return view

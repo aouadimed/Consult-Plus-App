@@ -3,11 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/menuFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.consultplus.view.ui.fragment.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/profilUpdateFragment"
+        android:name="com.example.consultplus.view.ui.fragment.ProfilUpdateFragment"
+        android:label="fragment_profil_update"
+        tools:layout="@layout/fragment_profil_update" />
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.example.consultplus.view.ui.fragment.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
 </navigation>

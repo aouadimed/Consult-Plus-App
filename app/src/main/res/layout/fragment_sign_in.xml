@@ -17,7 +17,8 @@
         android:id="@+id/ellipse"
         android:layout_width="199dp"
         android:layout_height="199dp"
-        android:layout_gravity="end|top"
+        android:layout_marginStart="245dp"
+        android:layout_marginTop="-40dp"
         android:background="@drawable/eclipse"
         />
 

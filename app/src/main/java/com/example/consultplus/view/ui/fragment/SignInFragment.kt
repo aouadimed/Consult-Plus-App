@@ -73,14 +73,16 @@ class SignInFragment : Fragment() {
                         if (response.isSuccessful) {
                             val editor: SharedPreferences.Editor = preferences.edit()
                             editor.putString("EmailUser", response.body()?.getEmail())
+                            editor.putString("ID", response.body()?.getId())
+                            editor.putString("role", response.body()?.getRole())
                             editor.putBoolean("isloged",true)
 
                             println("Email ====>>>>> " + response.body()?.getEmail())
                             editor.apply()  //Save Data
-                            Log.d("ID_USER", "ID_USER : ${response.body()?.getId()}")
+                            Log.d("ID_USER", "ID_USER : ${response.body()?.getEmail()}")
                             //  println("Token =============>>>>>>>>>  "+response.body()?.string())
 
-                            Toast.makeText(context, "User exist"+response.body()?.getId(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "User exist"+response.body()?.getEmail(), Toast.LENGTH_SHORT).show()
                             GoToHome()
                         } else {
                             Log.e("RETROFIT_ERROR", response.code().toString())

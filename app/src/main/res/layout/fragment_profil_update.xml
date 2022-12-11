@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true"
+    tools:context=".view.ui.fragment.ProfilUpdateFragment"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|top"
+
+            >
+
+
+
+                <View
+                    android:id="@+id/ellipse"
+                    android:layout_width="130dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/eclipse_2"
+                    />
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10sp"
+            android:layout_gravity="center|top"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hello_"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:fontFamily="@font/roboto_regular"
+                />
+            <TextView
+                android:id="@+id/full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:fontFamily="@font/poppins_bold"
+                />
+
+
+
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="120dp">
+        <View
+            android:id="@+id/rectangle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rectangle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:padding="20dp"
+            android:layout_gravity="center|top"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:checkedButton="@+id/patient"
+                app:singleSelection="true"
+                app:selectionRequired="true"
+
+
+                >
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/patient"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Patient" />
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/doctor"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Doctor" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_img"
+                android:layout_width="340dp"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_height="wrap_content"
+                android:elevation="30dp"
+                app:cardCornerRadius="30sp"
+                android:background="@drawable/searsh_bar">
+
+                <LinearLayout
+                    android:layout_margin="10sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+
+
+                    <View
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/avatar_profile"
+                        />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload Photo Profil"
+
+                        android:textSize="15sp"
+                        android:fontFamily="@font/roboto_regular"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:outlineProvider="none"
+                android:id="@+id/roud_image"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:cardBackgroundColor="@android:color/transparent"
+                android:layout_height="wrap_content">
+
+
+                <View
+                android:id="@+id/edit_image"
+                    android:translationZ="90dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/icons_edit"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                app:cardCornerRadius="150dp"
+                android:layout_height="150dp"
+                android:elevation="30dp">
+            <ImageView
+                android:id="@+id/img_profil"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+             />
+
+
+
+
+
+            </androidx.cardview.widget.CardView>
+
+            </androidx.cardview.widget.CardView>
+            <View
+
+                android:layout_width="340dp"
+                android:layout_margin="20dp"
+                android:layout_height="1dp"
+                android:background="@color/light_blue"/>
+
+
+
+
+            <EditText
+                android:id="@+id/etFullName"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="Enter your full name"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="text"
+                android:paddingStart="32sp"
+                />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_marginTop="30dp"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="Email"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="textEmailAddress"
+                android:paddingStart="32sp"
+                />
+
+            <EditText
+                android:layout_marginTop="30dp"
+                android:id="@+id/firstname"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="Enter your first name"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="text"
+                android:paddingStart="32sp"
+                />
+            <EditText
+                android:layout_marginTop="30dp"
+                android:id="@+id/lastname"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="Enter your last name"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="text"
+                android:paddingStart="32sp"
+                />
+            <Spinner
+                android:id="@+id/mySpinner"
+                android:layout_width="300sp"
+                android:layout_marginTop="30dp"
+                android:ellipsize="marquee"
+
+                android:background="@drawable/input_background"
+                android:layout_gravity="center"
+                android:layout_height="50dp" />
+            <EditText
+                android:id="@+id/datepicker"
+                android:layout_marginTop="30dp"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="Date of birth"
+                android:drawableEnd="@drawable/baseline_date"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="none"
+                android:editable="false"
+                android:paddingEnd="20sp"
+                android:paddingStart="32sp"
+                />
+            <EditText
+                android:id="@+id/adresse"
+                android:layout_marginTop="30dp"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="Adresse"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="text"
+                android:paddingStart="32sp"
+                />
+            <Spinner
+                android:id="@+id/Spinner_specialite"
+                android:layout_width="300sp"
+                android:layout_marginTop="30dp"
+                android:ellipsize="marquee"
+
+                android:background="@drawable/input_background"
+                android:layout_gravity="center"
+                android:layout_height="50dp" />
+            <EditText
+                android:id="@+id/experience"
+                android:layout_marginTop="30dp"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="How many years of practice"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="phone"
+                android:paddingStart="32sp"
+                />
+
+
+
+            <EditText
+                android:layout_marginTop="30dp"
+                android:id="@+id/numpatient"
+                android:layout_width="300sp"
+                android:layout_height="50dp"
+                android:background="@drawable/input_background"
+                android:hint="how many patients do you have ?"
+                android:textColorHint="@color/hint_text"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                android:layout_gravity="center"
+                android:inputType="phone"
+                android:paddingStart="32sp"
+                />
+
+            <EditText
+                android:id="@+id/description"
+                android:layout_width="300sp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/input_background"
+                android:ems="10"
+                android:gravity="left|top"
+                android:paddingBottom="10sp"
+                android:hint="Write your description.."
+                android:fontFamily="@font/roboto_regular"
+                android:textColorHint="@color/hint_text"
+                android:inputType="textMultiLine"
+                android:paddingStart="32sp"
+                android:paddingEnd="32sp"
+                android:paddingTop="10sp"
+                android:textSize="11sp">
+            </EditText>
+
+            <Button
+                android:layout_marginTop="30dp"
+                android:id="@+id/bt_save"
+                android:layout_width="280sp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bt_rectangle"
+                android:layout_gravity="center"
+
+                android:text="Save"
+                android:fontFamily="@font/poppins_bold"
+                android:textSize="12sp"
+                />
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </FrameLayout>
+
+
+</ScrollView>

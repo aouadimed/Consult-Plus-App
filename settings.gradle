@@ -2,7 +2,11 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         google()
+        maven {
+            url "https://maven.google.com" // Google's Maven repository
+        }
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 }
 dependencyResolutionManagement {
@@ -10,6 +14,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://maven.google.com" // Google's Maven repository
+        }
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "ConsultPlus"
