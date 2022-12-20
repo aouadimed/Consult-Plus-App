@@ -12,6 +12,7 @@
 
 
     <View
+        android:id="@+id/card"
         android:layout_width="144dp"
         android:layout_height="171dp"
 
@@ -38,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginStart="12sp"
+        android:layout_marginStart="5sp"
         android:layout_marginTop="115dp">
 
         <TextView

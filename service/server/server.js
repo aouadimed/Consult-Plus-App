@@ -2,12 +2,17 @@ import express, { json } from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Cors from "cors";
+import multer from "multer";
+import sharp from "sharp";
 import User from "./models/User.js";
 import Test from "./models/Test.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
 // App Config
 const app = express();
@@ -67,7 +72,7 @@ app.post("/register", async (req, res) => {
       email: req.body.email,
       password: hashedPassword,
     });
-    
+
     //save user and respond
     const user = await newUser.save();
     res
@@ -97,17 +102,16 @@ app.post("/userdata", (req, res) => {
         id: savedUser._id,
         name: savedUser.name,
         email: savedUser.email,
+        firstname: savedUser.firstname,
+        lastname: savedUser.lastname,
         specialite: savedUser.specialite,
         experience: savedUser.experience,
         patient: savedUser.patient,
         rating: savedUser.rating,
-        description: savedUser.description,
-        firstname: savedUser.firstname,
-        lastname: savedUser.lastname,
         genders: savedUser.genders,
         adresse: savedUser.adresse,
         birthdate: savedUser.birthdate,
-
+        description: savedUser.description,
       })
     );
   });
@@ -157,7 +161,6 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ err: err, status: "Wrong emails or password" });
   }
 });
-
 
 //forget Password
 
@@ -377,7 +380,7 @@ app.post("/forget-password", async (req, res) => {
                                                                         style="text-align:left;padding-top:20px;padding-right:10px;padding-bottom:20px;padding-left:10px">
                                                                         <div class="alignment" align="left">
                                                                             <!--[if mso]><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="#" style="height:48px;width:212px;v-text-anchor:middle;" arcsize="34%" stroke="false" fillcolor="#506bec"><w:anchorlock/><v:textbox inset="5px,0px,0px,0px"><center style="color:#ffffff; font-family:Arial, sans-serif; font-size:15px"><![endif]-->
-                                                                            <a href="http://localhost:3000/reset?token=${token}"
+                                                                            <a href="http://192.168.1.13:5000/reset?token=${token}"
                                                                                 target="_blank"
                                                                                 style="text-decoration:none;display:inline-block;color:#ffffff;background-color:#506bec;border-radius:16px;width:auto;border-top:0px solid TRANSPARENT;font-weight:undefined;border-right:0px solid TRANSPARENT;border-bottom:0px solid TRANSPARENT;border-left:0px solid TRANSPARENT;padding-top:8px;padding-bottom:8px;font-family:Helvetica Neue, Helvetica, Arial, sans-serif;text-align:center;mso-border-alt:none;word-break:keep-all;"><span
                                                                                     style="padding-left:25px;padding-right:20px;font-size:15px;display:inline-block;letter-spacing:normal;"><span
@@ -576,7 +579,7 @@ app.post("/reset-password", async (req, res) => {
     if (tokenData) {
       const salt = await bcrypt.genSalt(10);
       const newPassword = await bcrypt.hash(req.body.password, salt);
-      const userData = await User.findByOneAndUpdate(
+      const userData = await User.findOneAndUpdate(
         { _id: tokenData._id },
         { $set: { password: newPassword, resetToken: "" } },
         { new: true }
@@ -659,7 +662,7 @@ app.post("/editinfo", async (req, res) => {
   }
 });
 
-// editmedecin
+// update user by id
 app.post("/editmedecin", async (req, res) => {
   try {
     const email = req.body.email;
@@ -667,7 +670,7 @@ app.post("/editmedecin", async (req, res) => {
       specialite: req.body.specialite,
       experience: req.body.experience,
       patient: req.body.patient,
-      description : req.body.description
+      rating: req.body.rating,
     };
 
     const updateData = await User.findOneAndUpdate(
@@ -677,8 +680,7 @@ app.post("/editmedecin", async (req, res) => {
           specialite: newinfoData.specialite,
           experience: newinfoData.experience,
           patient: newinfoData.patient,
-          description: newinfoData.description
-
+          rating: newinfoData.rating,
         },
       },
       { new: true }
@@ -719,6 +721,90 @@ app.post("/editrole", async (req, res) => {
   }
 });
 
+//recherche spécialiter
+/*
+app.get("/recherche", async (req, res) => {
+  try {
+    let medecin = await User.find({ role: "medecin" }).select([
+      "specialite",
+      "role",
+    ]);
+    return res.status(200).json({ ms: medecin });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});*/
+
+// recherche spécialiter  par medecin
+
+app.get("/recherche/specialite", async (req, res) => {
+  try {
+    let medecin = await User.find({ specialite: req.body.specialite }).select([
+      "name",
+      "specialite",
+      "experience",
+      "patient",
+      "rating",
+      "description",
+    ]);
+    return res.status(200).json({ ms: medecin });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/patientdata", async (req, res) => {
+  try {
+    let patient = await User.find({ role: "patient" }).select([
+      "firstname",
+      "lastname",
+      "genders",
+      "adresse",
+      "birthdate",
+      "name",
+    ]);
+    return res.status(200).json({ ms: patient });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/doctordata", async (req, res) => {
+  try {
+    let doctor = await User.find({ role: "doctor" }).select([
+      "name",
+      "specialite",
+      "experience",
+      "patient",
+      "rating",
+      "description",
+    ]);
+    return res.status(200).json({ ms: doctor });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+//count specialiter grouped by
+
+app.get("/groupspecialiter", async (req, res) => {
+  try {
+    User.find({ role: "doctor" })
+    let specialite = await User.aggregate([
+      {
+        $group: {
+          _id: "$specialite",
+          count: { $sum: 1 }, // this means that the count will increment by 1
+        },
+      },
+    ]);
+
+    return res.status(200).json(specialite);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // create test
 
 app.post("/addtest", async (req, res) => {
@@ -747,6 +833,40 @@ app.delete("/delete/test/:_id", async (req, res) => {
   res.send(data);
 });
 
+//configure multer
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const upload = multer({
+  limits: {
+    fileSize: 1000000,
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error("Please upload a valid image file"));
+    }
+    cb(undefined, true);
+  },
+});
+
+app.post("/image", upload.single("upload"), async (req, res) => {
+  try {
+    const email = req.body.email;
+    await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toFile(__dirname + `/images/${req.file.originalname}`);
+    const x = await User.findOneAndUpdate(
+      { email: email },
+      { $set: { image: `/images/${req.file.originalname}` } }
+    );
+    res.status(201).send("Image uploaded succesfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
+});
 // Listener
 app.listen(port, () => {
   console.log(`listening on localhost:${port} 🚪 `);

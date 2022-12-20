@@ -32,7 +32,7 @@ class SignInFragment : Fragment() {
 
     private lateinit var btnLogin: Button
     private lateinit var tvSignUp: TextView
-    private lateinit var edtforgot_password: EditText
+    private lateinit var edtforgot_password: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -51,9 +51,12 @@ class SignInFragment : Fragment() {
         val password: EditText = view.findViewById(R.id.etPassword)
 
         btnLogin = view.findViewById(R.id.bt_sign_in)
-        //  edtforgot_password = view.findViewById(R.id.forget_password)
+        edtforgot_password = view.findViewById(R.id.forget_password)
         tvSignUp = view.findViewById(R.id.tvSignUp)
-
+        edtforgot_password.setOnClickListener(){
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.fragment2, ForgetPasswordFragment()).addToBackStack("").commit()
+        }
         fun ServiceLogin(email: String, password: String) {
             // Create Retrofit
             val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
@@ -113,7 +116,7 @@ class SignInFragment : Fragment() {
 
         tvSignUp.setOnClickListener {
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment2, SignUpFragment()).commit()
+            transaction.replace(R.id.fragment2, SignUpFragment()).addToBackStack("").commit()
         }
         return view
 

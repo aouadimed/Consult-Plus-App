@@ -6,12 +6,16 @@ class User()
     internal var name: String? = null
     internal var email: String? = null
     internal var password: String? = null
-    internal var gender: String? = null
-    internal var dateofbirth: String? = null
+    internal var genders: String? = null
+    internal var birthdate: String? = null
     internal var adresse: String? = null
     internal var role: String? = null
-
-
+    internal var firstname: String? = null
+    internal var lastname: String? = null
+    internal var specialite: String? = null
+    internal var experience: String? = null
+    internal var patient: String? = null
+    internal var description: String? = null
 
     // Getter id
     fun getId(): String? {
@@ -50,19 +54,19 @@ class User()
 
     // Getter password
     fun getGender(): String? {
-        return gender
+        return genders
     }
     // Setter password
     fun setGender(newgender: String?) {
-        gender = newgender
+        genders = newgender
     }
 
     fun getDateofbirth(): String? {
-        return dateofbirth
+        return birthdate
     }
     // Setter password
     fun setDateofbirth(newdateofbirth: String?) {
-        dateofbirth = newdateofbirth
+        birthdate = newdateofbirth
     }
 
     fun getAdresse(): String? {
@@ -79,5 +83,26 @@ class User()
     // Setter password
     fun setRole(newrole: String?) {
         role = newrole
+    }
+
+    fun getFirst(): String? {
+        return firstname
+    }
+
+    fun getLast(): String? {
+        return lastname
+    }
+
+    fun getS(): String? {
+        return specialite
+    }
+    fun getex(): String? {
+        return experience
+    }
+    fun getpatient(): String? {
+        return patient
+    }
+    fun getdes(): String? {
+        return description
     }
 }

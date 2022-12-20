@@ -9,35 +9,28 @@ import android.Manifest
 import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-
 import android.view.*
 import android.widget.*
-import androidx.fragment.app.Fragment
-
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isInvisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
-
-
 import com.example.consultplus.R
-import com.example.consultplus.databinding.ActivityMainBinding
 import com.example.consultplus.databinding.FragmentProfilUpdateBinding
 import com.example.consultplus.model.User
 import com.example.consultplus.retrofit.Request
 import com.example.consultplus.retrofit.Retrofit
+import com.example.consultplus.view.ui.activity.preferences
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.yalantis.ucrop.UCrop
@@ -48,11 +41,10 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import com.example.consultplus.view.ui.activity.preferences
-
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 internal var email: String? = null
 internal var role: String? = null
@@ -68,11 +60,7 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
 // onDestroyView.
 
     private lateinit var image_select: CardView
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -82,12 +70,9 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         val view = binding.root
         val adapter = ArrayAdapter(requireContext(),R.layout.spinner_item, listOf("Male", "Female"))
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
-        binding.mySpinner.adapter = adapter
-        val specialitList = ArrayAdapter(requireContext(),R.layout.spinner_item, listOf("Allergists","Anesthesiologists",
-            "Cardiologists","Colon and Rectal Surgeons","Critical Care Medicine Specialists","Dermatologists","Endocrinologists","Family Physicians",
-            "Gastroenterologists","Hematologists","Nephrologists","Neurologists","Obstetricians and Gynecologists","Ophthalmologists",
-            "Otolaryngologists","Pediatricians","Physiatrists","Plastic Surgeons","Podiatrists","Radiologists"
-
+       binding.mySpinner.adapter = adapter
+        val specialitList = ArrayAdapter(requireContext(),R.layout.spinner_item, listOf("Dermatology","Optometry","Neurosurgery",
+            "General Surgery","Psychiatry","Ophthalmology","Virology","Radiology","Plastic Surgery","Obstetrics","Orthopedics"
         ))
         specialitList.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.SpinnerSpecialite.adapter = specialitList
@@ -101,6 +86,43 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         binding.numpatient.visibility = View.GONE
         binding.experience.visibility = View.GONE
 
+
+
+            user.setEmail(email)
+            // Create JSON using JSONObject
+            val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
+
+            val service: Request = retrofit.create(Request::class.java)
+            CoroutineScope(Dispatchers.IO).launch {
+                // Do the POST request and get response
+                val response = service.GetUser(user)
+                withContext(Dispatchers.Main) {
+
+                    if (response.isSuccessful) {
+                        binding.fullName.text = response.body()?.getFullname()+" !"
+                        if(role!!.isNotEmpty()) {
+                            binding.etFullName.setText(response.body()?.getFullname())
+                            binding.etEmail.setText(response.body()?.getEmail())
+                            binding.firstname.setText(response.body()?.getFirst())
+                            binding.lastname.setText(response.body()?.getLast())
+                            val spinnerPosition = adapter.getPosition(response.body()?.getGender())
+                            binding.mySpinner.setSelection(spinnerPosition)
+                            binding.datepicker.setText(response.body()?.getDateofbirth())
+                            binding.adresse.setText(response.body()?.getAdresse())
+                        if(role.equals("doctor")){
+                            val Position = specialitList.getPosition(response.body()?.getS())
+                            binding.SpinnerSpecialite.setSelection(Position)
+                            binding.experience.setText(response.body()?.getex())
+                            binding.numpatient.setText(response.body()?.getpatient())
+                            binding.description.setText(response.body()?.getdes())
+                        }
+                        }
+                    } else {
+                        Log.e("RETROFIT_ERROR", response.code().toString())
+                        println("Message :" + response.errorBody()?.string())
+
+                    } }
+            }
 
 
 
@@ -132,6 +154,8 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
             binding.SpinnerSpecialite.visibility = View.VISIBLE
             binding.description.visibility = View.VISIBLE
             binding.numpatient.visibility = View.VISIBLE
+            binding.experience.visibility = View.VISIBLE
+
         }
 
 
@@ -251,6 +275,8 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
                 }
             }
         }
+
+
         binding.mySpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
@@ -320,7 +346,46 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         }
         displayFormattedDate(calendar.timeInMillis)
     }*/
+    /*
+  fun UploadImage(image : Uri) {
+      // Create Retrofit
+      val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
 
+      val service: Request = retrofit.create(Request::class.java)
+
+      // Create JSON using JSONObject
+      val jsonObject = JSONObject()
+      jsonObject.put("email", email)
+
+      // Convert JSONObject to String
+      val jsonObjectString = jsonObject.toString()
+      // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
+      val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+      val jsonFileBody = image.toFile().asRequestBody("multipart/form-data".toMediaTypeOrNull())
+
+      CoroutineScope(Dispatchers.IO).launch {
+          // Do the POST request and get response
+          val response = service.uploadImage(requestBody,jsonFileBody)
+          try {
+              withContext(Dispatchers.Main) {
+                  if (response.isSuccessful) {
+                      val gson = GsonBuilder().setPrettyPrinting().create()
+                      val prettyJson = gson.toJson(JsonParser.parseString(response.body()?.string()))
+                      Toast.makeText(context, "image", Toast.LENGTH_SHORT).show()
+                      Log.d("Pretty Printed JSON :", prettyJson)
+                  } else {
+                      Toast.makeText(context, "Not updated", Toast.LENGTH_SHORT).show()
+                  }
+              }
+          } catch (e: Exception) {
+              println(e.printStackTrace())
+              println("Error")
+          }
+      }
+  }
+
+     */
     private fun displayFormattedDate(timestamp: Long) {
         binding.datepicker.setText(formatter.format(timestamp))
         Log.i("Formatting", timestamp.toString())
@@ -392,6 +457,8 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
     //handle requested permission result
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        pickImageFromGallery()
+
         when(requestCode){
             PERMISSION_CODE -> {
                 if (grantResults.size >0 && grantResults[0] ==
@@ -419,6 +486,7 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             val resultUri :Uri ?= UCrop.getOutput(data!!)
             setImage(resultUri!!)
+           // UploadImage(resultUri!!)
             binding.cardImg.visibility = View.GONE
             binding.roudImage.visibility = View.VISIBLE
         }

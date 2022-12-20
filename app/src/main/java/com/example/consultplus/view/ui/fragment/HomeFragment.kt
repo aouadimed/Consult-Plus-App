@@ -1,6 +1,7 @@
 package com.example.consultplus.view.ui.fragment
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -22,7 +23,11 @@ import com.example.consultplus.model.User
 import com.example.consultplus.retrofit.Request
 import com.example.consultplus.retrofit.Retrofit
 import com.example.consultplus.view.ui.activity.preferences
+import com.google.android.material.internal.ContextUtils
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFragment : Fragment() {
@@ -73,35 +78,36 @@ class HomeFragment : Fragment() {
 
             } }
         }
-
-
-
-
         ////most popular
 
         recylcerMostPopular = view.findViewById(R.id.boxRecyclerView)
 
+        var boxList: ArrayList<MyObject>
 
-        var boxList : MutableList<MyObject> = ArrayList()
-
-        boxList.add(MyObject(EmojiPic = R.drawable.dentistry_emoji, specialties = "Dentistry", specialties_count = "70" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.cardiology_emoji, specialties = "Cardiology", specialties_count = "51" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.dentistry_emoji, specialties = "Dentistry", specialties_count = "70" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.cardiology_emoji, specialties = "Cardiology", specialties_count = "51" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.dentistry_emoji, specialties = "Dentistry", specialties_count = "70" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.cardiology_emoji, specialties = "Cardiology", specialties_count = "51" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.dentistry_emoji, specialties = "Dentistry", specialties_count = "70" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.cardiology_emoji, specialties = "Cardiology", specialties_count = "51" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.dentistry_emoji, specialties = "Dentistry", specialties_count = "70" ))
-        boxList.add(MyObject(EmojiPic = R.drawable.cardiology_emoji, specialties = "Cardiology", specialties_count = "51" ))
+            val call: Call<List<MyObject>> = service.mostPopuler()
 
 
-        recylcerMostPopularAdapter = MostPopularAdapter(boxList)
+            call.enqueue(object : Callback<List<MyObject>> {
+                override fun onResponse(call: Call<List<MyObject>>, response: Response<List<MyObject>>) {
+                    boxList = response.body()?.let { ArrayList<MyObject>(it) }!!
+                    recylcerMostPopularAdapter = MostPopularAdapter(boxList)
+                    recylcerMostPopular.adapter =  recylcerMostPopularAdapter
+                }
 
-        recylcerMostPopular.adapter =  recylcerMostPopularAdapter
+                override fun onFailure(call: Call<List<MyObject>>, t: Throwable) {
+                    ContextUtils.getActivity(context)?.runOnUiThread(java.lang.Runnable {
+                    })
+                    Log.d("***", "Opppsss" + t.message)
+                }
+
+
+
+            })
+
+
+
 
         recylcerMostPopular.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL ,false)
-
 
         ////////testtttt
 
