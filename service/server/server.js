@@ -721,33 +721,38 @@ app.post("/editrole", async (req, res) => {
   }
 });
 
-//recherche spécialiter
-/*
-app.get("/recherche", async (req, res) => {
-  try {
-    let medecin = await User.find({ role: "medecin" }).select([
-      "specialite",
-      "role",
-    ]);
-    return res.status(200).json({ ms: medecin });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});*/
+// recherche doctor
+
+app.post("/recherche/doctor", (req, res) => {
+  const { email } = req.body;
+  User.findOne({ email: email }).then((savedUser) => {
+    res.status(200).send(
+      JSON.stringify({
+        //200 OK
+        _id:savedUser._id,
+        firstname: savedUser.firstname,
+        lastname: savedUser.lastname,
+        specialite: savedUser.specialite,
+        experience: savedUser.experience,
+        patient: savedUser.patient,
+        rating: savedUser.rating,
+        description: savedUser.description,
+      })
+    );
+  });
+});
 
 // recherche spécialiter  par medecin
 
 app.get("/recherche/specialite", async (req, res) => {
   try {
-    let medecin = await User.find({ specialite: req.body.specialite }).select([
-      "name",
+    let medecin = await User.find({ specialite: req.headers.specialite }).select([
+      "email",
+      "firstname",
+      "lastname",
       "specialite",
-      "experience",
-      "patient",
-      "rating",
-      "description",
     ]);
-    return res.status(200).json({ ms: medecin });
+    return res.status(200).json(medecin);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -772,14 +777,12 @@ app.get("/patientdata", async (req, res) => {
 app.get("/doctordata", async (req, res) => {
   try {
     let doctor = await User.find({ role: "doctor" }).select([
-      "name",
+      "email",
+      "firstname",
+      "lastname",
       "specialite",
-      "experience",
-      "patient",
-      "rating",
-      "description",
     ]);
-    return res.status(200).json({ ms: doctor });
+    return res.status(200).json(doctor);
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
@@ -789,14 +792,9 @@ app.get("/doctordata", async (req, res) => {
 
 app.get("/groupspecialiter", async (req, res) => {
   try {
-    User.find({ role: "doctor" })
     let specialite = await User.aggregate([
-      {
-        $group: {
-          _id: "$specialite",
-          count: { $sum: 1 }, // this means that the count will increment by 1
-        },
-      },
+      { $unwind: "$specialite" },
+      { $sortByCount: "$specialite" },
     ]);
 
     return res.status(200).json(specialite);

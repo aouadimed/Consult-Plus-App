@@ -18,9 +18,10 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 import kotlin.collections.ArrayList
 
-data class MyObject(@DrawableRes val EmojiPic: Int, @SerializedName("_id") @Expose val specialties : String,@SerializedName("count") @Expose val specialties_count: Int)
+data class MyObject(@SerializedName("_id") @Expose val specialties : String,@SerializedName("count") @Expose val specialties_count: Int)
 
-class MostPopularAdapter(val ItemList: ArrayList<MyObject>) : RecyclerView.Adapter<MostPopularAdapter.ItemViewHolder>() {
+class MostPopularAdapter(val ItemList: ArrayList<MyObject>, private val onItemclicked: (specialties :String) -> Unit) :
+    RecyclerView.Adapter<MostPopularAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -34,7 +35,7 @@ class MostPopularAdapter(val ItemList: ArrayList<MyObject>) : RecyclerView.Adapt
         val count = ItemList[position].specialties_count
         val specialties = ItemList[position].specialties
 
-     //   holder.emoji.setImageResource(ItemList[position].EmojiPic)
+
         holder.count.text = count.toString()
         holder.specialties.text = specialties
         @RequiresApi(Build.VERSION_CODES.Q)
@@ -73,7 +74,9 @@ class MostPopularAdapter(val ItemList: ArrayList<MyObject>) : RecyclerView.Adapt
             holder.emoji.setImageResource(R.drawable.orthopedics)
         }
 
-
+        holder.itemView.setOnClickListener{
+            onItemclicked(specialties)
+        }
 
     }
     fun getRandomColor(): Int {

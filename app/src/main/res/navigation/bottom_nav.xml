@@ -20,4 +20,19 @@
         android:name="com.example.consultplus.view.ui.fragment.MenuFragment"
         android:label="fragment_menu"
         tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/doctorListFragment"
+        android:name="com.example.consultplus.view.ui.fragment.DoctorListFragment"
+        android:label="fragment_doctor_list"
+        tools:layout="@layout/fragment_doctor_list" />
+    <fragment
+        android:id="@+id/doctorProfilFragment"
+        android:name="com.example.consultplus.view.ui.fragment.DoctorProfilFragment"
+        android:label="fragment_doctor_profil"
+        tools:layout="@layout/fragment_doctor_profil" />
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.example.consultplus.view.ui.fragment.BookingFragment"
+        android:label="fragment_booking"
+        tools:layout="@layout/fragment_booking" />
 </navigation>

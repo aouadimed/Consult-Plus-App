@@ -84,12 +84,13 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         binding.SpinnerSpecialite.visibility = View.GONE
         binding.description.visibility = View.GONE
         binding.numpatient.visibility = View.GONE
-        binding.experience.visibility = View.GONE
+        binding.experience.visibility = View.GONE;
 
 
 
-            user.setEmail(email)
+
             // Create JSON using JSONObject
+        user.setEmail(email)
             val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
 
             val service: Request = retrofit.create(Request::class.java)

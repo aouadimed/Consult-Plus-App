@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.consultplus.R
@@ -90,7 +91,10 @@ class HomeFragment : Fragment() {
             call.enqueue(object : Callback<List<MyObject>> {
                 override fun onResponse(call: Call<List<MyObject>>, response: Response<List<MyObject>>) {
                     boxList = response.body()?.let { ArrayList<MyObject>(it) }!!
-                    recylcerMostPopularAdapter = MostPopularAdapter(boxList)
+                    recylcerMostPopularAdapter = MostPopularAdapter(boxList){ specialties ->
+                        val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+                        transaction.replace(R.id.fragment,DoctorListFragment.newInstance(specialties)).addToBackStack("").commit()
+                    }
                     recylcerMostPopular.adapter =  recylcerMostPopularAdapter
                 }
 

@@ -13,4 +13,26 @@
     <color name="lightBlue">#ff6691c4</color>
     <color name="lighterBlue">#ffcdd8ec</color>
     <color name="controlBackground">#ffffffff</color>
+    <color name="colorPrimary">#76b757</color>
+    <color name="colorPrimaryLight">#898ca9</color>
+    <color name="colorPrimaryDark">#FFFFFFFF</color>
+    <color name="colorAccent">#76b757</color>
+    <color name="white_transparent">#00FFFFFF</color>
+    <color name="purple_lite_200">#f9f8fd</color>
+    <color name="bottom_bar_bg">#EDFFF3</color>
+    <color name="popular_d_name">#2E4132</color>
+    <color name="devider">#33C4C4C4</color>
+    <color name="text_color_black">#000000</color>
+    <color name="edittext_hint">#54000000</color>
+    <color name="red">#F21E1E</color>
+    <color name="dark_blue">#2a3dea</color>
+    <color name="icon_tint">#4F000000</color>
+    <color name="black_200">#46000000</color>
+    <color name="shimmerColor">#BCBCBC</color>
+    <color name="light_black">#80000000</color>
+    <color name="notification_bg">#edfaf6</color>
+    <color name="chartColorOne">#5048e5</color>
+    <color name="chartColorTwo">#fbbf23</color>
+    <color name="chartColorThree">#f43f5e</color>
+
 </resources>

@@ -16,6 +16,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.consultplus.R
+import com.example.consultplus.view.ui.fragment.DoctorListFragment
 import com.example.consultplus.view.ui.fragment.HomeFragment
 import com.example.consultplus.view.ui.fragment.MenuFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -52,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                when (it.itemId) {
                    R.id.homeFragment -> {
                        loadFragment(HomeFragment())
+                   }
+                   R.id.cal -> {
+                       loadFragment(DoctorListFragment())
                    }
                    R.id.menu -> {
                       loadFragment(MenuFragment())
