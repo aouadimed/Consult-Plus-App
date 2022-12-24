@@ -40,6 +40,7 @@ class MenuFragment : Fragment() {
 
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         email = preferences.getString("EmailUser","")
+        role = preferences.getString("role","")
         user.setEmail(email)
         // Create JSON using JSONObject
         val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
@@ -90,8 +91,14 @@ class MenuFragment : Fragment() {
         return view
     }
     private  fun loadFragment(fragment: Fragment){
-        val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-        transaction.replace(R.id.fragment, fragment).addToBackStack("").commit()
+        if(role.equals("patient")){
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.fragment, fragment).addToBackStack("").commit()
+        }else{
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.fragment3, fragment).addToBackStack("").commit()
+        }
+
     }
 
 

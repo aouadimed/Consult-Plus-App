@@ -20,6 +20,7 @@ import com.example.consultplus.view.ui.activity.MainActivity
 import com.example.consultplus.model.User
 import com.example.consultplus.retrofit.Request
 import com.example.consultplus.retrofit.Retrofit
+import com.example.consultplus.view.ui.activity.DoctorActivity
 import com.example.consultplus.view.ui.activity.preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -86,7 +87,12 @@ class SignInFragment : Fragment() {
                             //  println("Token =============>>>>>>>>>  "+response.body()?.string())
 
                             Toast.makeText(context, "User exist"+response.body()?.getEmail(), Toast.LENGTH_SHORT).show()
-                            GoToHome()
+                            if( response.body()?.getRole().equals("patient")){
+                                GoToHome()
+                            }else{
+                                GoToBack()
+                            }
+
                         } else {
                             Log.e("RETROFIT_ERROR", response.code().toString())
                             println("Message :" + response.errorBody()?.string())
@@ -122,7 +128,14 @@ class SignInFragment : Fragment() {
 
     }
 
+    fun GoToBack() {
 
+        val thisActivity: Activity? = activity
+        if (thisActivity != null) {
+            startActivity(Intent(thisActivity, DoctorActivity::class.java)) // if needed
+            thisActivity.finish()
+        }
+    }
     fun GoToHome() {
 
             val thisActivity: Activity? = activity

@@ -3,6 +3,8 @@ package com.example.consultplus.retrofit
 import com.example.consultplus.adapter.Doctor
 import com.example.consultplus.adapter.MyObject
 import com.example.consultplus.model.User
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -16,6 +18,8 @@ data class ProfileImageUploadModel(
     val message: String,
     val profile_picture: String
 )
+data class CheckTime(@SerializedName("time") @Expose val time: String)
+
 interface Request {
     // A suspending function is simply a function that can be paused and resumed at a later time. They can execute a long running operation and wait for it to complete without blocking.
     @POST("login")
@@ -53,6 +57,13 @@ interface Request {
 
     @POST("recherche/doctor")
     suspend fun GetDoctor(@Body User: User): Response<User>
+
+    @POST("addbooking")
+    suspend fun Book(@Body requestBody: RequestBody): Response<ResponseBody>
+
+    @GET("/recherche/time")
+    fun Gettimes(@Header("doctor") doctorID: String,@Header("date") Date: String): Call<List<CheckTime>>
+
 
     @Multipart
     @POST("patientImageUpload/{id}")

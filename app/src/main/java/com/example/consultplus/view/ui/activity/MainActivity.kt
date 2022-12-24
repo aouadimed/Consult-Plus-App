@@ -26,8 +26,6 @@ lateinit var preferences: SharedPreferences
 private lateinit var bottom_navigation : BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    lateinit var bottomNav : BottomNavigationView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,10 +44,13 @@ class MainActivity : AppCompatActivity() {
         navHostFragment.navController.graph = graph
 
         bottom_navigation = findViewById(R.id.bottomNavigationView)
+
+
+
         bottom_navigation.setOnItemSelectedListener {
-           if(false){
-               Toast.makeText(this@MainActivity, "fefffz", Toast.LENGTH_SHORT).show()
-           }else{
+           if(role.isNullOrEmpty()){
+               Toast.makeText(this@MainActivity, "Complete the process to proceed", Toast.LENGTH_SHORT).show()
+           }
                when (it.itemId) {
                    R.id.homeFragment -> {
                        loadFragment(HomeFragment())
@@ -62,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                    }
                }
 
-           }
+
 
 
 

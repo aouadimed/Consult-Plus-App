@@ -24,7 +24,6 @@ import kotlinx.coroutines.withContext
 class DoctorProfilFragment : Fragment() {
     private var DoctorId: String = ""
     internal var emailuser: String? = null
-    lateinit var binding: FragmentDoctorProfilBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -92,6 +91,7 @@ class DoctorProfilFragment : Fragment() {
         binding.button.setOnClickListener{
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
             transaction.replace(R.id.fragment,BookingFragment.newInstance(binding.firstname.text.toString(),binding.lastname.text.toString(),binding.specialties.text.toString(),DoctorId)).addToBackStack("").commit()
+            println(DoctorId)
         }
 
 

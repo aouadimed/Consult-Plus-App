@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_nav_doctor"
+    app:startDestination="@id/menuFragment2">
+
+    <fragment
+        android:id="@+id/approveAppointmentFragment"
+        android:name="com.example.consultplus.view.ui.fragment.ApproveAppointmentFragment"
+        android:label="fragment_approve_appointment"
+        tools:layout="@layout/fragment_approve_appointment" />
+    <fragment
+        android:id="@+id/menuFragment2"
+        android:name="com.example.consultplus.view.ui.fragment.MenuFragment"
+        android:label="fragment_menu"
+        tools:layout="@layout/fragment_menu" />
+    <fragment
+        android:id="@+id/profilUpdateFragment2"
+        android:name="com.example.consultplus.view.ui.fragment.ProfilUpdateFragment"
+        android:label="fragment_profil_update"
+        tools:layout="@layout/fragment_profil_update" />
+</navigation>

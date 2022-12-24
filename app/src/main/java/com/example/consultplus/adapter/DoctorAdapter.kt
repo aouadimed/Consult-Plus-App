@@ -49,14 +49,6 @@ class DoctorAdapter(val ItemList: ArrayList<Doctor>, private val onItemclicked: 
 
 
     }
-
-
-
-
-
-
-
-
     override fun getItemCount() = ItemList.size
     fun getRandomColor(): Int {
         val rnd = Random()

@@ -6,21 +6,27 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:requestLegacyExternalStorage="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:usesCleartextTraffic="true"
         android:icon="@drawable/logo_consult"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ConsultPlus"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name="com.example.consultplus.view.ui.activity.DoctorActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name="com.example.consultplus.view.ui.activity.MainActivity"
             android:exported="false">
@@ -51,6 +57,7 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -58,27 +65,20 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:scheme="http"
                     android:host="192.168.1.13"
-                    android:port="5000" />
-
+                    android:port="5000"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
 
-
         <provider
-            android:authorities="${applicationId}.provider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
-
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/fileproviderpaths">
-
-            </meta-data>
-
+                android:resource="@xml/fileproviderpaths"></meta-data>
         </provider>
     </application>
 

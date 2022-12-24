@@ -30,6 +30,7 @@ import com.example.consultplus.databinding.FragmentProfilUpdateBinding
 import com.example.consultplus.model.User
 import com.example.consultplus.retrofit.Request
 import com.example.consultplus.retrofit.Retrofit
+import com.example.consultplus.view.ui.activity.DoctorActivity
 import com.example.consultplus.view.ui.activity.preferences
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -315,7 +316,11 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         }else if(SetRole.equals("doctor")){
             updateClient(binding.mySpinner.selectedItem.toString(),binding.datepicker.text.toString(),binding.adresse.text.toString(),binding.firstname.text.toString(),binding.lastname.text.toString())
             updateDoctor(binding.SpinnerSpecialite.selectedItem.toString(),binding.description.text.toString(),Integer.parseInt(binding.experience.text.toString()),Integer.parseInt(binding.numpatient.text.toString()))
-            loadFragment(MenuFragment())
+            val thisActivity: Activity? = activity
+            if (thisActivity != null) {
+                startActivity(Intent(thisActivity, DoctorActivity::class.java)) // if needed
+                thisActivity.finish()
+            }
         }
         }
 
@@ -327,7 +332,11 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
 
             updateClient(binding.mySpinner.selectedItem.toString(),binding.datepicker.text.toString(),binding.adresse.text.toString(),binding.firstname.text.toString(),binding.lastname.text.toString())
             updateDoctor(binding.SpinnerSpecialite.selectedItem.toString(),binding.description.text.toString(),Integer.parseInt(binding.experience.text.toString()),Integer.parseInt(binding.numpatient.text.toString()))
-            loadFragment(ProfilUpdateFragment())
+            val thisActivity: Activity? = activity
+            if (thisActivity != null) {
+                startActivity(Intent(thisActivity, DoctorActivity::class.java)) // if needed
+                thisActivity.finish()
+            }
         }
 
 

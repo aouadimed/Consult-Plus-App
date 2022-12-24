@@ -4,30 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.ui.activity.MainActivity">
+    tools:context=".view.ui.activity.DoctorActivity">
 
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment"
+        android:id="@+id/fragment3"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="false"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        tools:layout="@layout/fragment_approve_appointment" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+        android:id="@+id/bottomNavigationView2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/bottom_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu_doctor" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

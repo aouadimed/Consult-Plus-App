@@ -5,6 +5,7 @@ import Cors from "cors";
 import multer from "multer";
 import sharp from "sharp";
 import User from "./models/User.js";
+import Booking from "./models/Booking.js";
 import Test from "./models/Test.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -729,7 +730,7 @@ app.post("/recherche/doctor", (req, res) => {
     res.status(200).send(
       JSON.stringify({
         //200 OK
-        _id:savedUser._id,
+        id: savedUser._id,
         firstname: savedUser.firstname,
         lastname: savedUser.lastname,
         specialite: savedUser.specialite,
@@ -746,12 +747,9 @@ app.post("/recherche/doctor", (req, res) => {
 
 app.get("/recherche/specialite", async (req, res) => {
   try {
-    let medecin = await User.find({ specialite: req.headers.specialite }).select([
-      "email",
-      "firstname",
-      "lastname",
-      "specialite",
-    ]);
+    let medecin = await User.find({
+      specialite: req.headers.specialite,
+    }).select(["email", "firstname", "lastname", "specialite"]);
     return res.status(200).json(medecin);
   } catch (err) {
     return res.status(500).json({ error: err.message });
@@ -865,7 +863,44 @@ app.post("/image", upload.single("upload"), async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+app.post("/addbooking", async (req, res) => {
+  try {
+    //create new user
+
+    const newBooking = new Booking({
+      doctor: req.body.doctor,
+      patient: req.body.patient,
+      statu: req.body.statu,
+      date: req.body.date,
+      time: req.body.time,
+    });
+
+    //save user and respond
+    const booking = await newBooking.save();
+    res.status(200, { status: "ok", booking }).json({ status: booking });
+  } catch (err) {
+    console.log(err);
+    res.status(500, { status: "error" }).json({ status: "error" });
+  }
+});
+
 // Listener
 app.listen(port, () => {
   console.log(`listening on localhost:${port} 🚪 `);
+});
+
+
+
+
+app.get("/recherche/time", async (req, res) => {
+  try {
+    let booking = await Booking.find({
+      doctor: req.headers.doctor,
+      date: req.headers.date,
+    },{time:1,_id:0}).select(["time"]);
+    return res.status(200).json(booking);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
 });

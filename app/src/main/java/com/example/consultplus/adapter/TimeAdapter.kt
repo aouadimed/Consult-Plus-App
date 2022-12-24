@@ -1,5 +1,6 @@
 package com.example.consultplus.adapter
 
+import android.content.ClipData.Item
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,9 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.consultplus.R
 import com.example.consultplus.databinding.ItemTimeBinding
+import java.util.ArrayList
 
 data class TimeModel(
     var time:Int,
@@ -20,9 +24,30 @@ data class TimeModel(
 data class TimeCheck(
     val time:String,
 )
-class TimeAdapter(val ItemList :MutableList<TimeModel>, private val onItemclicked: (time :String) -> Unit) :
+class MyDiffUtil(private val oldList :MutableList<TimeModel>,private val newList :MutableList<TimeModel>) : DiffUtil.Callback(){
+    override fun getOldListSize(): Int {
+        return  oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition].check == newList[newItemPosition].check
+    }
+
+}
+class TimeAdapter() :
         RecyclerView.Adapter<TimeAdapter.ViewHolder>(){
     private lateinit var  context: Context
+
+    private var ItemList :MutableList<TimeModel> = ArrayList()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimeAdapter.ViewHolder {
         context = parent.context
@@ -31,9 +56,16 @@ class TimeAdapter(val ItemList :MutableList<TimeModel>, private val onItemclicke
 
     override fun getItemCount() = ItemList.size
 
+    fun setData(newList :MutableList<TimeModel>){
+        val diffUtil = MyDiffUtil(ItemList,newList)
+        val diffReults = DiffUtil.calculateDiff(diffUtil)
+        ItemList=newList
+        diffReults.dispatchUpdatesTo(this)
+    }
+
+
 
     inner class  ViewHolder(private val binding: ItemTimeBinding):RecyclerView.ViewHolder(binding.root) {
-
         fun bind(timeModel: TimeModel) {
             with(binding){
                 var time:String = ""
@@ -72,13 +104,17 @@ class TimeAdapter(val ItemList :MutableList<TimeModel>, private val onItemclicke
                         Toast.makeText(context, "This date is taken", Toast.LENGTH_SHORT).show()
                     }else{
                         timeModel.selected = true
-                        onItemclicked(time)
                         notifyItemChanged(absoluteAdapterPosition)
                         val nums = (0 until ItemList.size)
                         nums.forEach{
                             if(it == absoluteAdapterPosition)return@forEach
                             ItemList[it].selected=false
                             notifyItemChanged(it)
+                        }
+                        selectOnTimeClickListener.let {
+                            if (it != null) {
+                                it(time,absoluteAdapterPosition)
+                            }
                         }
                     }
 
@@ -89,8 +125,11 @@ class TimeAdapter(val ItemList :MutableList<TimeModel>, private val onItemclicke
             }
         }
     }
+    private var selectOnTimeClickListener: ((time: String,position:Int) -> Unit)? = null
 
-
+    fun setOnTimeSelectedListener(listener: (time: String,position:Int) -> Unit) {
+        selectOnTimeClickListener = listener
+    }
 
 
     override fun onBindViewHolder(holder: TimeAdapter.ViewHolder, position: Int) {
