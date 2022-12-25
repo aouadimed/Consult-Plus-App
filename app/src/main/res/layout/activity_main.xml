@@ -20,6 +20,7 @@
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:itemIconTint="@null"
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="50dp"

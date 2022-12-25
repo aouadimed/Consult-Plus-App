@@ -177,6 +177,7 @@
                 android:layout_height="150dp"
                 android:elevation="30dp">
             <ImageView
+                app:backgroundTint="@null"
                 android:id="@+id/img_profil"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -195,9 +196,6 @@
                 android:layout_margin="20dp"
                 android:layout_height="1dp"
                 android:background="@color/light_blue"/>
-
-
-
 
             <EditText
                 android:id="@+id/etFullName"

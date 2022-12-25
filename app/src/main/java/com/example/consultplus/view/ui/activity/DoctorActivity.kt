@@ -28,15 +28,17 @@ class DoctorActivity : AppCompatActivity() {
 
         bottom_navigation = findViewById(R.id.bottomNavigationView2)
 
-
+        bottom_navigation.itemIconTintList = null;
 
         bottom_navigation.setOnItemSelectedListener {
 
                 when (it.itemId) {
                     R.id.Appointment -> {
+                        it.setIcon(R.drawable.home_selector)
                         loadFragment(ApproveAppointmentFragment())
                     }
                     R.id.menu2 -> {
+                        it.setIcon(R.drawable.menu_selector)
                         loadFragment(MenuFragment())
                     }
                 }

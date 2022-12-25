@@ -1,25 +1,27 @@
 package com.example.consultplus.view.ui.fragment
 
 
-import android.annotation.SuppressLint
+import PatientAppointmentAdapter
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.consultplus.GetImg
 import com.example.consultplus.R
-import com.example.consultplus.adapter.MostPopularAdapter
-import com.example.consultplus.adapter.MyObject
-import com.example.consultplus.adapter.TestAdapter
-import com.example.consultplus.adapter.TestObject
+import com.example.consultplus.adapter.*
+import com.example.consultplus.model.PatientBooking
 import com.example.consultplus.model.User
 import com.example.consultplus.retrofit.Request
 import com.example.consultplus.retrofit.Retrofit
@@ -29,6 +31,7 @@ import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URL
 
 
 class HomeFragment : Fragment() {
@@ -37,9 +40,10 @@ class HomeFragment : Fragment() {
     lateinit var recylcerMostPopular: RecyclerView
 
 
-    lateinit var recylceTestAdapter: TestAdapter
+    lateinit var recylceTestAdapter: PatientAppointmentAdapter
     lateinit var recylcerTest: RecyclerView
-
+    lateinit var Image: ImageView
+    internal var patientID: String? = null
 
     private lateinit var nameTag: TextView
     private lateinit var test_tile: TextView
@@ -61,9 +65,15 @@ class HomeFragment : Fragment() {
 
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         email = preferences.getString("EmailUser","")
+        patientID = preferences.getString("ID","")
 
         user.setEmail(email)
         // Create JSON using JSONObject
+
+        Image = view.findViewById(R.id.img_profil)
+
+        GetImg.Image(requireContext(),email!!,Image)
+
 
         CoroutineScope(Dispatchers.IO).launch {
             // Do the POST request and get response
@@ -80,14 +90,10 @@ class HomeFragment : Fragment() {
             } }
         }
         ////most popular
-
-        recylcerMostPopular = view.findViewById(R.id.boxRecyclerView)
-
-        var boxList: ArrayList<MyObject>
-
+    fun desplayMostPopuler(){
+            recylcerMostPopular = view.findViewById(R.id.boxRecyclerView)
+            var boxList: ArrayList<MyObject>
             val call: Call<List<MyObject>> = service.mostPopuler()
-
-
             call.enqueue(object : Callback<List<MyObject>> {
                 override fun onResponse(call: Call<List<MyObject>>, response: Response<List<MyObject>>) {
                     boxList = response.body()?.let { ArrayList<MyObject>(it) }!!
@@ -104,17 +110,46 @@ class HomeFragment : Fragment() {
                     Log.d("***", "Opppsss" + t.message)
                 }
 
-
-
             })
+    }
 
 
 
 
+        desplayMostPopuler()
         recylcerMostPopular.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL ,false)
 
         ////////testtttt
 
+        fun displayMyAppointments(){
+            var booklist: ArrayList<PatientBooking>
+            val call: Call<List<PatientBooking>> = service.getAppointmentsBypatient(patientID!!)
+            recylcerTest = view.findViewById(R.id.testRecyclerView)
+            call.enqueue(object : Callback<List<PatientBooking>> {
+                override fun onResponse(
+                    call: Call<List<PatientBooking>>,
+                    response: Response<List<PatientBooking>>
+                ) {
+
+                    booklist = ArrayList<PatientBooking>(response.body()!!)
+                    recylceTestAdapter = PatientAppointmentAdapter(booklist.take(4) as MutableList<PatientBooking>)
+                    recylcerTest.adapter =  recylceTestAdapter
+                }
+
+                override fun onFailure(call: Call<List<PatientBooking>>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+        }
+
+
+
+        displayMyAppointments()
+        recylcerTest.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL ,false)
+
+
+/*
         recylcerTest = view.findViewById(R.id.testRecyclerView)
         test_tile = view.findViewById(R.id.test_title)
 
@@ -138,7 +173,7 @@ class HomeFragment : Fragment() {
 
        // test_tile.visibility = View.INVISIBLE
 
-
+*/
 
         return view
     }

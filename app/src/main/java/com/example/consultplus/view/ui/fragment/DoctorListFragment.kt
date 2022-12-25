@@ -12,6 +12,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.consultplus.GetImg
 import com.example.consultplus.R
 import com.example.consultplus.adapter.Doctor
 import com.example.consultplus.adapter.DoctorAdapter
@@ -52,7 +53,7 @@ class DoctorListFragment : Fragment() {
 
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         email = preferences.getString("EmailUser","")
-
+        GetImg.Image(requireContext(),email!!,binding.imgProfil)
         user.setEmail(email)
         // Create JSON using JSONObject
 

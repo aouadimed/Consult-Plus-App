@@ -2,6 +2,8 @@
 package com.example.consultplus.retrofit
 import com.example.consultplus.adapter.Doctor
 import com.example.consultplus.adapter.MyObject
+import com.example.consultplus.model.Booking
+import com.example.consultplus.model.PatientBooking
 import com.example.consultplus.model.User
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -64,11 +66,26 @@ interface Request {
     @GET("/recherche/time")
     fun Gettimes(@Header("doctor") doctorID: String,@Header("date") Date: String): Call<List<CheckTime>>
 
+    @GET("recherche/booking")
+    fun getAppointmentsBydoctor(@Header("doctor") doctorID: String): Call<List<Booking>>
+
+    @GET("recherche/bookingforpatient")
+    fun getAppointmentsBypatient(@Header("patient") doctorID: String): Call<List<PatientBooking>>
+
+    @POST("editstatu")
+    suspend fun EditStatus(@Body requestBody: RequestBody): Response<ResponseBody>
+
+
+    @HTTP(method = "DELETE", path = "deletebooking", hasBody = true)
+    suspend fun DeleteBokking(@Body requestBody: RequestBody): Response<ResponseBody>
+
+
 
     @Multipart
-    @POST("patientImageUpload/{id}")
+    @POST("ImageUpload")
     suspend fun patientImageUpload(
-        @Path("id") id: String,
+        @Part("email") email: RequestBody,
+        @Part("upload") name: RequestBody,
         @Part file: MultipartBody.Part?
-    ): Response<ProfileImageUploadModel>
+    ): Response<ResponseBody>
 }

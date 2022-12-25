@@ -10,10 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.consultplus.GetImg
 import com.example.consultplus.adapter.*
 import com.example.consultplus.databinding.FragmentBookingBinding
 import com.example.consultplus.model.User
@@ -30,13 +30,12 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.sql.Time
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BookingFragment : Fragment() {
 
-    internal var email: String? = null
+    internal var emailuser: String? = null
     private  var user = User()
     private var timeSlotsListPosition: Int = 0
     lateinit var DateAdapter: DateAdapter
@@ -65,6 +64,7 @@ class BookingFragment : Fragment() {
         val lastname = arguments?.getString(BookingFragment.lastname)
         val specialite = arguments?.getString(BookingFragment.specialite)
         val doctorId = arguments?.getString(BookingFragment.doctorId)
+        val email = arguments?.getString(BookingFragment.email)
 
         binding.firstname.setText(firstname)
         binding.lastname.setText(lastname)
@@ -74,9 +74,10 @@ class BookingFragment : Fragment() {
         val service: Request = retrofit.create(Request::class.java)
 
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
-        email = preferences.getString("EmailUser","")
-
-        user.setEmail(email)
+        emailuser = preferences.getString("EmailUser","")
+        GetImg.Image(requireContext(),emailuser!!,binding.imgProfil)
+        GetImg.Image(requireContext(),email!!,binding.img)
+        user.setEmail(emailuser)
         // Create JSON using JSONObject
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -253,13 +254,12 @@ fun Book(day: String, time: String) {
 
         val call: Call<List<CheckTime>> = service.Gettimes(doctorid, date)
 
-        val liveData = MutableLiveData<CheckTime>()
-
         call.enqueue(object : Callback<List<CheckTime>> {
             override fun onResponse(
                 call: Call<List<CheckTime>>,
                 response: Response<List<CheckTime>>
             ) {
+
                 timeCheck = response.body()?.let { ArrayList<CheckTime>(it) }!!
             }
 
@@ -276,11 +276,12 @@ fun Book(day: String, time: String) {
         private const val lastname = "lastname"
         private const val specialite = "specialite"
         private const val doctorId = "doctorId"
+        private const val email = "email"
 
         // Create `SecondFragment` with bundle so you can send data from certain fragment to `SecondFragment`.
-        fun newInstance(Firstname: String,Lastname: String,Specialite: String,DoctorId: String) : BookingFragment = BookingFragment().apply {
+        fun newInstance(Firstname: String,Lastname: String,Specialite: String,DoctorId: String,Email :String) : BookingFragment = BookingFragment().apply {
             val bundle = bundleOf(firstname to Firstname,lastname to Lastname, specialite to Specialite,
-                doctorId to DoctorId)
+                doctorId to DoctorId,email to Email)
             arguments = bundle
 
         }}

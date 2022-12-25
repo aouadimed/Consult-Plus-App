@@ -20,6 +20,7 @@
         tools:layout="@layout/fragment_approve_appointment" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        app:itemIconTint="@null"
         android:id="@+id/bottomNavigationView2"
         android:layout_width="match_parent"
         android:layout_height="50dp"

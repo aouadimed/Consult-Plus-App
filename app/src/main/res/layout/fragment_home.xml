@@ -178,7 +178,7 @@
                     android:id="@+id/test_title"
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/your_test_results"
+                    android:text="Your appointments"
                     android:layout_gravity="center"
                     android:textColor="#000000"
                     android:textSize="18sp"
@@ -198,97 +198,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/testRecyclerView"
                 android:layout_width="wrap_content"
-                android:layout_height="170dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 tools:listitem="@layout/test_layout"
                 android:clickable="true"
                 android:focusable="true"
  />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_horizontal"
-
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20sp"
-                    android:elevation="30dp"
-                app:cardCornerRadius="30sp"
-                android:background="@drawable/searsh_bar">
-
-                <LinearLayout
-                    android:layout_margin="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="vertical">
-
-                        <TextView
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Instant Appointment"
-                            android:textColor="#000000"
-
-                            android:textSize="15sp"
-                            android:fontFamily="@font/poppins_bold"
-                            />
-
-
-                        <TextView
-                            android:layout_width="160dp"
-                            android:layout_height="wrap_content"
-                            android:text="Lorem ipsum dolor sit amet, consectetur.
-"
-                            android:textColor="#000000"
-
-                            android:textSize="15sp"
-                            android:fontFamily="@font/roboto_regular"
-                            />
-
-                        <Button
-                            android:layout_marginTop="10sp"
-                            android:id="@+id/button"
-                            android:layout_width="105dp"
-                            android:layout_height="32sp"
-                            android:background="@drawable/bt_rectangle"
-                            android:layout_gravity="center_horizontal"
-                            android:textSize="8sp"
-                            android:text="Learn more"
-                            android:fontFamily="@font/roboto_regular"
-
-                            />
-
-
-
-
-
-
-
-                    </LinearLayout>
-
-
-
-                    <View
-                        android:layout_width="130dp"
-                        android:layout_height="92dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/undraw_medicine"
-                        />
-
-
-                </LinearLayout>
-
-
-
-
-
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </FrameLayout>

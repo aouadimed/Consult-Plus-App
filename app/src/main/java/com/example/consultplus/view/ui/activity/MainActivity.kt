@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         bottom_navigation = findViewById(R.id.bottomNavigationView)
 
 
-
+        bottom_navigation.itemIconTintList = null;
         bottom_navigation.setOnItemSelectedListener {
            if(role.isNullOrEmpty()){
                Toast.makeText(this@MainActivity, "Complete the process to proceed", Toast.LENGTH_SHORT).show()

@@ -18,13 +18,20 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
+import com.example.consultplus.FileUtils
+import com.example.consultplus.GetImg
 import com.example.consultplus.R
 import com.example.consultplus.databinding.FragmentProfilUpdateBinding
 import com.example.consultplus.model.User
@@ -39,7 +46,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.MultipartBody.Part.Companion.create
+import okhttp3.MultipartBody.Part.Companion.createFormData
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.File
@@ -80,6 +93,7 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
 
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         email = preferences.getString("EmailUser","")
+        GetImg.Image(requireContext(),email!!,binding.imgProfil)
         role = preferences.getString("role","")
         binding.toggleGroup.visibility = View.GONE
         binding.SpinnerSpecialite.visibility = View.GONE
@@ -356,36 +370,45 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         }
         displayFormattedDate(calendar.timeInMillis)
     }*/
-    /*
-  fun UploadImage(image : Uri) {
+
+  fun UploadImage(imageUri : Uri) {
       // Create Retrofit
       val retrofit: retrofit2.Retrofit = Retrofit.getInstance()
 
       val service: Request = retrofit.create(Request::class.java)
 
-      // Create JSON using JSONObject
-      val jsonObject = JSONObject()
-      jsonObject.put("email", email)
+      val file: File = FileUtils.from(requireContext()!!,imageUri)
 
-      // Convert JSONObject to String
-      val jsonObjectString = jsonObject.toString()
-      // Create RequestBody ( We're not using any converter, like GsonConverter, MoshiConverter e.t.c, that's why we use RequestBody )
-      val requestBody = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
 
-      val jsonFileBody = image.toFile().asRequestBody("multipart/form-data".toMediaTypeOrNull())
+      val reqFile: RequestBody = file.asRequestBody("image/*".toMediaTypeOrNull())
+
+
+      val body: MultipartBody.Part = createFormData("upload", file.getName(), reqFile)
+
+      val name: RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "upload")
+
+
+      val description = email?.let {
+          RequestBody.create(
+              MultipartBody.FORM, it
+          )
+      }
+
+
+
 
       CoroutineScope(Dispatchers.IO).launch {
           // Do the POST request and get response
-          val response = service.uploadImage(requestBody,jsonFileBody)
+          val response = service.patientImageUpload(description!!,name,body)
           try {
               withContext(Dispatchers.Main) {
                   if (response.isSuccessful) {
                       val gson = GsonBuilder().setPrettyPrinting().create()
                       val prettyJson = gson.toJson(JsonParser.parseString(response.body()?.string()))
-                      Toast.makeText(context, "image", Toast.LENGTH_SHORT).show()
                       Log.d("Pretty Printed JSON :", prettyJson)
+
                   } else {
-                      Toast.makeText(context, "Not updated", Toast.LENGTH_SHORT).show()
+
                   }
               }
           } catch (e: Exception) {
@@ -393,9 +416,10 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
               println("Error")
           }
       }
+
   }
 
-     */
+
     private fun displayFormattedDate(timestamp: Long) {
         binding.datepicker.setText(formatter.format(timestamp))
         Log.i("Formatting", timestamp.toString())
@@ -496,7 +520,7 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
         if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
             val resultUri :Uri ?= UCrop.getOutput(data!!)
             setImage(resultUri!!)
-           // UploadImage(resultUri!!)
+            UploadImage(resultUri!!)
             binding.cardImg.visibility = View.GONE
             binding.roudImage.visibility = View.VISIBLE
         }

@@ -65,7 +65,7 @@
                             app:cardCornerRadius="130dp">
 
                             <ImageView
-
+                                app:backgroundTint="@null"
                                 android:id="@+id/img_profil"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />

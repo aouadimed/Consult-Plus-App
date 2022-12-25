@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.example.consultplus.GetImg
 import com.example.consultplus.R
 import com.example.consultplus.databinding.FragmentMenuBinding
 import com.example.consultplus.model.User
@@ -40,6 +41,7 @@ class MenuFragment : Fragment() {
 
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         email = preferences.getString("EmailUser","")
+        GetImg.Image(requireContext(),email!!,binding.imgProfil)
         role = preferences.getString("role","")
         user.setEmail(email)
         // Create JSON using JSONObject

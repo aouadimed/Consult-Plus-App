@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
+import com.example.consultplus.GetImg
 import com.example.consultplus.R
 import com.example.consultplus.databinding.FragmentDoctorProfilBinding
 import com.example.consultplus.model.User
@@ -37,7 +38,8 @@ class DoctorProfilFragment : Fragment() {
         var user = User()
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         emailuser = preferences.getString("EmailUser","")
-
+        GetImg.Image(requireContext(),emailuser!!,binding.imgProfil)
+        GetImg.Image(requireContext(),email!!,binding.img)
         user.setEmail(emailuser)
         // Create JSON using JSONObject
 
@@ -90,7 +92,7 @@ class DoctorProfilFragment : Fragment() {
 
         binding.button.setOnClickListener{
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment,BookingFragment.newInstance(binding.firstname.text.toString(),binding.lastname.text.toString(),binding.specialties.text.toString(),DoctorId)).addToBackStack("").commit()
+            transaction.replace(R.id.fragment,BookingFragment.newInstance(binding.firstname.text.toString(),binding.lastname.text.toString(),binding.specialties.text.toString(),DoctorId,email)).addToBackStack("").commit()
             println(DoctorId)
         }
 

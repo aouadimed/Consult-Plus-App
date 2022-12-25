@@ -11,6 +11,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import nodemailer from "nodemailer";
+import * as fs from "fs";
+import * as http from "http"
 
 import { fileURLToPath } from "url";
 import { dirname } from "path";
@@ -157,7 +159,7 @@ app.post("/login", async (req, res) => {
     );
 
     //send response
-    res.status(200).json({ email: user.email, user: token, role: user.role });
+    res.status(200).json({ email: user.email, user: token, role: user.role,id: user.id });
   } catch (err) {
     res.status(500).json({ err: err, status: "Wrong emails or password" });
   }
@@ -839,30 +841,69 @@ const upload = multer({
     fileSize: 1000000,
   },
   fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      return cb(new Error("Please upload a valid image file"));
-    }
     cb(undefined, true);
   },
 });
 
-app.post("/image", upload.single("upload"), async (req, res) => {
+
+
+app.post("/ImageUpload", upload.single("upload"), async (req, res) => {
   try {
     const email = req.body.email;
     await sharp(req.file.buffer)
-      .resize({ width: 250, height: 250 })
-      .png()
-      .toFile(__dirname + `/images/${req.file.originalname}`);
+      .toFile(__dirname + `/images/${req.file.originalname}.png`);
     const x = await User.findOneAndUpdate(
       { email: email },
-      { $set: { image: `/images/${req.file.originalname}` } }
+      { $set: { image: `${req.file.originalname}.png` } }
     );
-    res.status(201).send("Image uploaded succesfully");
+    res.status(201).send(email);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
 });
+
+
+app.get("/getImage/:email", (req, res) => {
+  var email  = req.params.email;
+  if (!email) {
+    return res.status(422).json({ error: "please provide an email" });
+  }
+  User.findOne({ email: email }).then((savedUser) => {
+    if (!savedUser) {
+      return res.status(422).json({ error: "user did not exist" });
+    }
+    var image = savedUser.image
+
+    fs.readFile(
+      "./images/"+image,
+
+      function (err, image) {
+          if (err) {
+            return res.status(422).json({ error: "user did not exist" });
+          }
+          console.log(image);
+         
+          res.setHeader('Content-Type', 'image/jpg');
+          res.setHeader('Content-Length', ''); // Image size here
+          res.setHeader('Access-Control-Allow-Origin', '*'); // If needs to be public
+          res.send(image);
+      }
+  );
+
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
 
 app.post("/addbooking", async (req, res) => {
   try {
@@ -900,6 +941,72 @@ app.get("/recherche/time", async (req, res) => {
       date: req.headers.date,
     },{time:1,_id:0}).select(["time"]);
     return res.status(200).json(booking);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.get("/recherche/booking", async (req, res) => {
+  try {
+    let booking = await Booking.find({
+      doctor: req.headers.doctor,
+    }).sort({statu: 1, date:-1 }).populate([
+{
+          path : 'patient', // in order table vendor ref id 
+          select : 'firstname lastname'
+      }])
+
+    return res.status(200).json(booking);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/recherche/bookingforpatient", async (req, res) => {
+  try {
+    let booking = await Booking.find({
+      patient: req.headers.patient,
+    }).sort({ date:-1 }).populate([
+      {
+          path : 'doctor', // in order table vendor ref id 
+          select : 'firstname lastname'
+      }])
+
+    return res.status(200).json(booking);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.delete("/deletebooking", function (req, res) {
+  var id = req.body._id;
+  Booking.findOneAndRemove({ _id: id }, function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(500).send();
+    }
+    return res.status(200).send();
+  });
+});
+
+
+app.post("/editstatu", async (req, res) => {
+  try {
+    const _id = req.body._id;
+    const updateData = await Booking.findOneAndUpdate(
+      { _id: _id },
+      {
+        $set: {
+          statu: 1,
+        },
+      },
+      { new: true }
+    );
+    return res.status(200).json({
+      updateData,
+    });
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

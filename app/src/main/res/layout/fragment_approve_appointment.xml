@@ -42,6 +42,7 @@
                     android:layout_marginEnd="23dp"
                     android:elevation="30dp">
                     <ImageView
+                        app:backgroundTint="@null"
                         android:id="@+id/img_profil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -120,7 +121,7 @@
                     android:id="@+id/test_title"
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
-                    android:text="Your Appointment"
+                    android:text="Your Appointments"
                     android:layout_gravity="center"
                     android:textColor="#000000"
                     android:textSize="18sp"
