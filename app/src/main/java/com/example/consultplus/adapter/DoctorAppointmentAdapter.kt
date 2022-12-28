@@ -26,6 +26,7 @@ import com.example.consultplus.R.drawable.bt_supprimer
 import com.example.consultplus.model.Booking
 import com.example.consultplus.retrofit.Request
 import com.example.consultplus.retrofit.Retrofit
+import com.example.consultplus.view.ui.fragment.AddEtatFragment
 import com.example.consultplus.view.ui.fragment.ApproveAppointmentFragment
 import com.example.consultplus.view.ui.fragment.SetRole
 import com.example.consultplus.view.ui.fragment.email
@@ -39,25 +40,29 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.security.AccessController.getContext
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DoctorAppointmentAdapter(val ItemList: MutableList<Booking>) : RecyclerView.Adapter<DoctorAppointmentAdapter.DoctorAppointmentViewHolder>() {
     private lateinit var  context: Context
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):  DoctorAppointmentAdapter.DoctorAppointmentViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DoctorAppointmentViewHolder {
         context = parent.context
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.appointment_layout, parent, false)
 
-        return  DoctorAppointmentAdapter.DoctorAppointmentViewHolder(view)
+        return  DoctorAppointmentViewHolder(view)
     }
 
     override fun getItemCount() = ItemList.size
 
     class DoctorAppointmentViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        val firstname =itemView.findViewById<TextView>(R.id.first)
+        val firstname = itemView.findViewById<TextView>(R.id.first)
         val lastname =itemView.findViewById<TextView>(R.id.last)
         val bookDate =itemView.findViewById<TextView>(R.id.bookdate)
         val booktime =itemView.findViewById<TextView>(R.id.booktime)
         val button =itemView.findViewById<Button>(R.id.button)
+        val finished =itemView.findViewById<Button>(R.id.finished)
+
 
 
     }
@@ -65,8 +70,8 @@ class DoctorAppointmentAdapter(val ItemList: MutableList<Booking>) : RecyclerVie
     override fun onBindViewHolder(holder: DoctorAppointmentViewHolder, position: Int) {
         val firstname = ItemList[position].patient.firstname.capitalize()
         val lastname = ItemList[position].patient.lastname.capitalize()
-        val bookdate = ItemList[position].date
-        val booktime = ItemList[position].time
+        var bookdate = ItemList[position].date
+        var booktime = ItemList[position].time
         var satuts = ItemList[position].status
         val ID = ItemList[position].ID
 
@@ -74,27 +79,76 @@ class DoctorAppointmentAdapter(val ItemList: MutableList<Booking>) : RecyclerVie
         holder.lastname.text = lastname
         holder.bookDate.text = bookdate
         holder.booktime.text = booktime
+        holder.button.visibility =View.GONE
+        holder.finished.visibility =View.GONE
 
-        if(satuts == 1){
-            holder.button.background = ContextCompat.getDrawable(context, bt_supprimer)
-            holder.button.text = "Cancel"
+
+        val dtStart = bookdate+'T'+booktime
+        val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.getDefault())
+        val date = format.parse(dtStart)
+
+
+
+        if (Date().after(date)) {
+            holder.finished.visibility =View.VISIBLE
+            holder.finished.background = ContextCompat.getDrawable(context, R.drawable.finisheeee)
         }else{
-            holder.button.background = ContextCompat.getDrawable(context, bt_rectangle)
-            holder.button.text = "Confirmer"
+            holder.button.visibility =View.VISIBLE
+            if(satuts == 1){
+                holder.button.background = ContextCompat.getDrawable(context, bt_supprimer)
+                holder.button.text = "Cancel"
+            }else{
+                holder.button.background = ContextCompat.getDrawable(context, bt_rectangle)
+                holder.button.text = "Confirmer"
+            }
         }
 
         holder.button.setOnClickListener{
 
             if(holder.button.text.equals("Confirmer")){
-                statuschange(ID)
-                changeFragment(ApproveAppointmentFragment(),context)
+                val builder = AlertDialog.Builder(context)
+                builder.setMessage("Confirm appointment")
+                    .setCancelable(false).setPositiveButton("Yes") { dialog, id ->
+
+                        statuschange(ID)
+                        changeFragment(ApproveAppointmentFragment(),context)
+                    }
+                    .setNegativeButton("No") { dialog, id ->
+                        // Dismiss the dialog
+                        dialog.dismiss()
+                    }
+                val alert = builder.create()
+                alert.show()
             }else{
-                deleteiem(ID)
-                changeFragment(ApproveAppointmentFragment(),context)
+                val builder = AlertDialog.Builder(context)
+                builder.setMessage("delete appointment")
+                    .setCancelable(false).setPositiveButton("Yes") { dialog, id ->
+
+                        deleteiem(ID)
+                        changeFragment(ApproveAppointmentFragment(),context)
+
+                    }
+                    .setNegativeButton("No") { dialog, id ->
+                        // Dismiss the dialog
+                        dialog.dismiss()
+                    }
+                val alert = builder.create()
+                alert.show()
+
             }
 
         }
 
+        holder.finished.setOnClickListener{
+            val transaction: FragmentTransaction = (context as FragmentActivity).supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.fragment3,AddEtatFragment.newInstance(ID))
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.addToBackStack(null)
+            transaction.commit()
+
+
+
+        }
 
 
     }

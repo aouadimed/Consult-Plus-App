@@ -102,21 +102,37 @@
 
         <LinearLayout
             android:id="@+id/mm"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="90dp"
             android:layout_width="match_parent"
             android:layout_gravity="center|top"
             android:layout_height="match_parent"
             android:layout_marginBottom="10sp"
             android:orientation="vertical"
             >
-            <LinearLayout
 
+
+                <androidx.appcompat.widget.SearchView
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/searshbar"
+                    android:layout_width="350dp"
+                    android:layout_height="50dp"
+                    app:iconifiedByDefault="false"
+                    android:elevation="10dp"
+                    android:background="@drawable/searsh_bar"
+                    app:queryBackground="@android:color/transparent"
+                    android:hint="@string/search_by_doctors_or_diseases"/>
+
+
+            <LinearLayout
+android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
 
                 >
+
                 <TextView
                     android:id="@+id/test_title"
                     android:layout_width="340dp"
@@ -133,6 +149,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="6sp"
                 android:id="@+id/testRecyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

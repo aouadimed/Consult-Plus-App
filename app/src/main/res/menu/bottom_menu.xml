@@ -6,14 +6,14 @@
 
         android:id="@+id/homeFragment"
         android:icon="@drawable/home_selector"
-        android:title="Home" />
+        android:title="" />
     <item
         android:id="@+id/cal"
         android:icon="@drawable/appointments_selector"
-        android:title="Appointment" />
+        android:title="" />
     <item
         android:id="@+id/menu"
         android:icon="@drawable/menu_selector"
-        android:title="Menu" />
+        android:title="" />
 
 </menu>

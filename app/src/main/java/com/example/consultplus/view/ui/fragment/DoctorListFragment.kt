@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -31,6 +32,8 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DoctorListFragment : Fragment() {
@@ -84,7 +87,9 @@ class DoctorListFragment : Fragment() {
                     boxList =  ArrayList<Doctor>(response.body())
                     recylcerDoctorAdapter = DoctorAdapter(boxList){ email->
                         val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-                        transaction.replace(R.id.fragment,DoctorProfilFragment.newInstance(email)).addToBackStack("").commit()
+                        transaction.replace(R.id.fragment,DoctorProfilFragment.newInstance(email)).addToBackStack("")
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .commit()
                     }
                    binding.testRecyclerView.adapter =   recylcerDoctorAdapter
                 }
@@ -99,9 +104,10 @@ class DoctorListFragment : Fragment() {
             binding.testRecyclerView.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL ,false)
 
         }
+        var boxList: ArrayList<Doctor> = ArrayList()
+
         fun allDoctors(){
 
-            var boxList: ArrayList<Doctor>
 
             val call: Call<List<Doctor>>? = service.getAllDoctor()
 
@@ -111,7 +117,9 @@ class DoctorListFragment : Fragment() {
                     boxList =  ArrayList<Doctor>(response.body())
                     recylcerDoctorAdapter = DoctorAdapter(boxList){email->
                         val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-                        transaction.replace(R.id.fragment,DoctorProfilFragment.newInstance(email)).addToBackStack("").commit()
+                        transaction.replace(R.id.fragment,DoctorProfilFragment.newInstance(email)).addToBackStack("")
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .commit()
                     }
                     binding.testRecyclerView.adapter =   recylcerDoctorAdapter
                 }
@@ -133,11 +141,37 @@ class DoctorListFragment : Fragment() {
             getDoctorsbySp()
         }
 
+        fun filterList(query: String?) {
 
+            if (query != null) {
+                val filteredList = ArrayList<Doctor>()
+                for (i in boxList) {
+                    if (i.firstname.lowercase(Locale.ROOT).contains(query)
+                        || i.lastname.lowercase(Locale.ROOT).contains(query)
+                        || i.specialties.lowercase(Locale.ROOT).contains(query)
+                    ) {
+                        filteredList.add(i)
+                    }
+                }
 
+                if (filteredList.isEmpty()) {
+                    Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show()
+                } else {
+                    recylcerDoctorAdapter.setFilteredList(filteredList)
+                }
+            }
+        }
+        binding.searshbar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterList(newText)
+                return true
+            }
 
-
+        })
 
 
         return view

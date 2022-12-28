@@ -92,23 +92,11 @@
 
         </LinearLayout>
 
-        <AutoCompleteTextView
-            android:layout_gravity="center|top"
-            android:layout_marginTop="110dp"
-            android:id="@+id/searshbar"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:background="@drawable/searsh_bar"
-            android:paddingStart="15sp"
-            android:paddingEnd="15sp"
-            android:elevation="10dp"
-            android:drawablePadding="15dp"
-            android:drawableStart="@drawable/searsh_icon"
-            android:hint="@string/search_by_doctors_or_diseases"/>
+
 
 
         <LinearLayout
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="110dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -128,7 +116,7 @@
             >
             <TextView
 
-                android:layout_width="340dp"
+                android:layout_width="360dp"
                 android:layout_height="wrap_content"
                 android:text="@string/most_popular"
                 android:textColor="#000000"
@@ -137,13 +125,7 @@
                 android:fontFamily="@font/poppins_bold"
                 />
 
-            <View
-                android:id="@+id/full_popular"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:background="@drawable/open_in_full"
-                />
+
         </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_marginTop="5dp"
@@ -160,7 +142,7 @@
 
         <LinearLayout
             android:id="@+id/mm"
-            android:layout_marginTop="390dp"
+            android:layout_marginTop="330dp"
             android:layout_width="match_parent"
             android:layout_gravity="center|top"
             android:layout_height="wrap_content"
@@ -203,6 +185,7 @@
                 tools:listitem="@layout/test_layout"
                 android:clickable="true"
                 android:focusable="true"
+                android:isScrollContainer="false"
  />
 
         </LinearLayout>

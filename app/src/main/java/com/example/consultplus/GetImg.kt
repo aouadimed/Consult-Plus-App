@@ -11,9 +11,15 @@ object GetImg {
      fun Image(context: Context,email:String,Image:ImageView){
         Glide.get(context).clearMemory();
         Glide.with(context)
-            .load("http://192.168.1.14:5000/getImage/"+email)
+            .load("http://192.168.1.11:5000/getImage/"+email)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .skipMemoryCache(true)
+            .into(Image)
+    }
+    fun Imageadapter(context: Context,email:String,Image:ImageView){
+        Glide.with(context)
+            .load("http://192.168.1.11:5000/getImage/"+email)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(Image)
     }
 

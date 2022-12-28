@@ -76,7 +76,9 @@ class ForgetPasswordFragment : Fragment() {
 
         binding.tvSignUp.setOnClickListener(){
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment2, SignUpFragment()).addToBackStack("").commit()
+            transaction.replace(R.id.fragment2, SignUpFragment()).addToBackStack("")
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }
 
         return view

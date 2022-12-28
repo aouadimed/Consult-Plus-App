@@ -96,7 +96,9 @@ class SignUpFragment : Fragment() {
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
             transaction.replace(R.id.fragment2, SignInFragment())
             transaction.addToBackStack(null)
-            transaction.commit()
+            transaction
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }
 
         btnSignUp.setOnClickListener{

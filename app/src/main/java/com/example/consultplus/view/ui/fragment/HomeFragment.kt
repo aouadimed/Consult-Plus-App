@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
     private lateinit var test_tile_2: TextView
     lateinit var sharedPreferences: SharedPreferences
     internal var email: String? = null
+    lateinit var expand: View
     private  var user = User()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -99,7 +100,9 @@ class HomeFragment : Fragment() {
                     boxList = response.body()?.let { ArrayList<MyObject>(it) }!!
                     recylcerMostPopularAdapter = MostPopularAdapter(boxList){ specialties ->
                         val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-                        transaction.replace(R.id.fragment,DoctorListFragment.newInstance(specialties)).addToBackStack("").commit()
+                        transaction.replace(R.id.fragment,DoctorListFragment.newInstance(specialties)).addToBackStack("")
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                            .commit()
                     }
                     recylcerMostPopular.adapter =  recylcerMostPopularAdapter
                 }
@@ -148,32 +151,17 @@ class HomeFragment : Fragment() {
         displayMyAppointments()
         recylcerTest.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL ,false)
 
+       expand = view.findViewById(R.id.full_popular_2)
 
-/*
-        recylcerTest = view.findViewById(R.id.testRecyclerView)
-        test_tile = view.findViewById(R.id.test_title)
+        expand.setOnClickListener{
 
-
-
-        var TestList : MutableList<TestObject> = ArrayList()
-
-
-        TestList.add(TestObject(test_name = "General blood analysis", test_status = "ready" ))
-        TestList.add(TestObject(test_name = "Antibody test COVID-19", test_status = "in the process" ))
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.fragment, PatieentAppointmentsFragment()).addToBackStack("").setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
 
 
+        }
 
-
-        recylceTestAdapter = TestAdapter(TestList)
-
-        recylcerTest.adapter =  recylceTestAdapter
-
-        recylcerTest.layoutManager = LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL ,false)
-
-
-       // test_tile.visibility = View.INVISIBLE
-
-*/
 
         return view
     }

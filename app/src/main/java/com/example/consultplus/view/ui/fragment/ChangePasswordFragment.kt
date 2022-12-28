@@ -64,6 +64,7 @@ class ChangePasswordFragment : Fragment() {
                             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
                             transaction.replace(R.id.fragment2, SignInFragment())
                             transaction.addToBackStack(null)
+                            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             transaction.commit()
                         } else {
                             Toast.makeText(context, response.message().toString(), Toast.LENGTH_SHORT).show()

@@ -9,8 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.consultplus.GetImg
-import com.example.consultplus.R
-import com.example.consultplus.adapter.Doctor
 import com.example.consultplus.adapter.DoctorAppointmentAdapter
 import com.example.consultplus.databinding.FragmentApproveAppointmentBinding
 import com.example.consultplus.model.Booking
@@ -29,8 +27,9 @@ import java.util.ArrayList
 
 
 class ApproveAppointmentFragment : Fragment() {
-    internal var doctorID: String? = null
     lateinit var recylcerDoctorAppointmentAdapter: DoctorAppointmentAdapter
+    private var doctorID: String? = null
+
     private  var user = User()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +38,7 @@ class ApproveAppointmentFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentApproveAppointmentBinding.inflate(inflater, container, false)
         val view = binding.root
+        context?.cacheDir?.deleteRecursively()
         preferences = requireActivity().getSharedPreferences("SHARED_PREF", Context.MODE_PRIVATE)
         doctorID = preferences.getString("ID","")
         email = preferences.getString("EmailUser","")
@@ -74,9 +74,11 @@ class ApproveAppointmentFragment : Fragment() {
                 response: Response<List<Booking>>
             ) {
 
-                booklist =  ArrayList<Booking>(response.body())
+                booklist =  ArrayList<Booking>(response.body()!!)
                recylcerDoctorAppointmentAdapter = DoctorAppointmentAdapter(booklist)
                 binding.testRecyclerView.adapter =  recylcerDoctorAppointmentAdapter
+                binding.testRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,false)
+
 
             }
 
@@ -90,7 +92,6 @@ class ApproveAppointmentFragment : Fragment() {
 
 
 
-        binding.testRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL ,false)
 
 
 

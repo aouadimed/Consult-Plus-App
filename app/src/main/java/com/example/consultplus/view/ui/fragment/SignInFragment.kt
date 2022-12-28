@@ -56,7 +56,9 @@ class SignInFragment : Fragment() {
         tvSignUp = view.findViewById(R.id.tvSignUp)
         edtforgot_password.setOnClickListener(){
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment2, ForgetPasswordFragment()).addToBackStack("").commit()
+            transaction.replace(R.id.fragment2, ForgetPasswordFragment()).addToBackStack("")
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }
         fun ServiceLogin(email: String, password: String) {
             // Create Retrofit
@@ -122,7 +124,9 @@ class SignInFragment : Fragment() {
 
         tvSignUp.setOnClickListener {
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment2, SignUpFragment()).addToBackStack("").commit()
+            transaction.replace(R.id.fragment2, SignUpFragment()).addToBackStack("")
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }
         return view
 

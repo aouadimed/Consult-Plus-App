@@ -138,15 +138,15 @@
                     <View
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/test_circle" />
+                        android:background="@drawable/ic_baseline_calendar_today_24" />
 
                     <TextView
                         android:layout_width="200dp"
-                        android:layout_height="20sp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:fontFamily="@font/eastman_medium"
-                        android:text="Notification"
+                        android:text="My apppointments"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 

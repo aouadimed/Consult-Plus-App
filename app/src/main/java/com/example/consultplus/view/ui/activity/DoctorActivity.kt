@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.fragment.NavHostFragment
 import com.example.consultplus.R
 import com.example.consultplus.view.ui.fragment.ApproveAppointmentFragment
@@ -33,12 +34,9 @@ class DoctorActivity : AppCompatActivity() {
         bottom_navigation.setOnItemSelectedListener {
 
                 when (it.itemId) {
-                    R.id.Appointment -> {
-                        it.setIcon(R.drawable.home_selector)
-                        loadFragment(ApproveAppointmentFragment())
+                    R.id.Appointment -> { loadFragment(ApproveAppointmentFragment())
                     }
                     R.id.menu2 -> {
-                        it.setIcon(R.drawable.menu_selector)
                         loadFragment(MenuFragment())
                     }
                 }
@@ -57,7 +55,7 @@ class DoctorActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment3,fragment)
         transaction.addToBackStack("")
         transaction.setReorderingAllowed(true)
-        transaction.commit()
+        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit()
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.bottom_menu_doctor, menu)

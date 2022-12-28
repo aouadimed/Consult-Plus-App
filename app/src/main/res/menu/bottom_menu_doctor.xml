@@ -4,10 +4,10 @@
     <item
         android:icon="@drawable/home_selector"
         android:id="@+id/Appointment"
-        android:title="Home" />
+        android:title="" />
     <item
         android:id="@+id/menu2"
         android:icon="@drawable/menu_selector"
-        android:title="Menu" />
+        android:title="" />
 
 </menu>

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.bumptech.glide.Glide
 import com.example.consultplus.GetImg
 import com.example.consultplus.R
 import com.example.consultplus.databinding.FragmentMenuBinding
@@ -70,15 +71,25 @@ class MenuFragment : Fragment() {
 
 
 
+       binding.notification.setOnClickListener{
+
+            val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
+            transaction.replace(R.id.fragment, PatieentAppointmentsFragment()).addToBackStack("").setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
 
 
+        }
 
 
+        if (role.equals("doctor")){
+            binding.notification.visibility = View.GONE
+        }
 
 
 
         binding.logout.setOnClickListener(){
             preferences = requireActivity().getSharedPreferences("SHARED_PREF", AppCompatActivity.MODE_PRIVATE)
+            context?.let { it1 -> Glide.get(it1).clearMemory() };
             preferences.edit().clear().apply()
             val thisActivity: Activity? = activity
             if (thisActivity != null) {
@@ -95,7 +106,8 @@ class MenuFragment : Fragment() {
     private  fun loadFragment(fragment: Fragment){
         if(role.equals("patient")){
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment, fragment).addToBackStack("").commit()
+            transaction.replace(R.id.fragment, fragment).addToBackStack("").setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
         }else{
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
             transaction.replace(R.id.fragment3, fragment).addToBackStack("").commit()

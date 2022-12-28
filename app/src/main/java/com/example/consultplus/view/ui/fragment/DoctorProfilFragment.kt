@@ -92,7 +92,9 @@ class DoctorProfilFragment : Fragment() {
 
         binding.button.setOnClickListener{
             val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-            transaction.replace(R.id.fragment,BookingFragment.newInstance(binding.firstname.text.toString(),binding.lastname.text.toString(),binding.specialties.text.toString(),DoctorId,email)).addToBackStack("").commit()
+            transaction.replace(R.id.fragment,BookingFragment.newInstance(binding.firstname.text.toString(),binding.lastname.text.toString(),binding.specialties.text.toString(),DoctorId,email)).addToBackStack("")
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .commit()
             println(DoctorId)
         }
 

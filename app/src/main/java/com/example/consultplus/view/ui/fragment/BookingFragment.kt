@@ -63,8 +63,8 @@ class BookingFragment : Fragment() {
         val firstname = arguments?.getString(BookingFragment.firstname)
         val lastname = arguments?.getString(BookingFragment.lastname)
         val specialite = arguments?.getString(BookingFragment.specialite)
-        val doctorId = arguments?.getString(BookingFragment.doctorId)
         val email = arguments?.getString(BookingFragment.email)
+        val doctorId = arguments?.getString(BookingFragment.doctorId)
 
         binding.firstname.setText(firstname)
         binding.lastname.setText(lastname)

@@ -21,7 +21,7 @@ import { dirname } from "path";
 const app = express();
 dotenv.config();
 
-const port = process.env.APP_PORT || 8001;
+const port = process.env.APP_PORT || 5000;
 const connection_url = process.env.APP_MONGODB;
 
 // Middlewares
@@ -967,7 +967,7 @@ app.get("/recherche/bookingforpatient", async (req, res) => {
   try {
     let booking = await Booking.find({
       patient: req.headers.patient,
-    }).sort({ date:-1 }).populate([
+    }).sort({date:-1,time:-1 }).populate([
       {
           path : 'doctor', // in order table vendor ref id 
           select : 'firstname lastname'

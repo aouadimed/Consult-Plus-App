@@ -9,7 +9,14 @@
         android:id="@+id/homeFragment"
         android:name="com.example.consultplus.view.ui.fragment.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_doctorListFragment"
+            app:destination="@id/doctorListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profilUpdateFragment"
         android:name="com.example.consultplus.view.ui.fragment.ProfilUpdateFragment"
@@ -19,17 +26,29 @@
         android:id="@+id/menuFragment"
         android:name="com.example.consultplus.view.ui.fragment.MenuFragment"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menuFragment_to_profilUpdateFragment"
+            app:destination="@id/profilUpdateFragment" />
+    </fragment>
     <fragment
         android:id="@+id/doctorListFragment"
         android:name="com.example.consultplus.view.ui.fragment.DoctorListFragment"
         android:label="fragment_doctor_list"
-        tools:layout="@layout/fragment_doctor_list" />
+        tools:layout="@layout/fragment_doctor_list" >
+        <action
+            android:id="@+id/action_doctorListFragment_to_doctorProfilFragment"
+            app:destination="@id/doctorProfilFragment" />
+    </fragment>
     <fragment
         android:id="@+id/doctorProfilFragment"
         android:name="com.example.consultplus.view.ui.fragment.DoctorProfilFragment"
         android:label="fragment_doctor_profil"
-        tools:layout="@layout/fragment_doctor_profil" />
+        tools:layout="@layout/fragment_doctor_profil" >
+        <action
+            android:id="@+id/action_doctorProfilFragment_to_bookingFragment"
+            app:destination="@id/bookingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bookingFragment"
         android:name="com.example.consultplus.view.ui.fragment.BookingFragment"

@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.NavController
 import androidx.navigation.NavInflater
 import androidx.navigation.findNavController
@@ -62,11 +63,6 @@ class MainActivity : AppCompatActivity() {
                       loadFragment(MenuFragment())
                    }
                }
-
-
-
-
-
             true
 
         }
@@ -77,7 +73,9 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment,fragment)
         transaction.addToBackStack("")
         transaction.setReorderingAllowed(true)
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.commit()
+
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.bottom_menu, menu)

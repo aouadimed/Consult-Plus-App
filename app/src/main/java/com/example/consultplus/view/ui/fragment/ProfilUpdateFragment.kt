@@ -385,21 +385,18 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
 
       val body: MultipartBody.Part = createFormData("upload", file.getName(), reqFile)
 
-      val name: RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "upload")
+      val Filename: RequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), "upload")
 
 
-      val description = email?.let {
+      val email = email?.let {
           RequestBody.create(
               MultipartBody.FORM, it
           )
       }
 
-
-
-
       CoroutineScope(Dispatchers.IO).launch {
           // Do the POST request and get response
-          val response = service.patientImageUpload(description!!,name,body)
+          val response = service.patientImageUpload(email!!,Filename,body)
           try {
               withContext(Dispatchers.Main) {
                   if (response.isSuccessful) {
@@ -426,7 +423,9 @@ class ProfilUpdateFragment : Fragment() , DatePickerDialog.OnDateSetListener//, 
     }
     private  fun loadFragment(fragment: Fragment){
         val transaction: FragmentTransaction = requireFragmentManager().beginTransaction()
-        transaction.replace(R.id.fragment, fragment).addToBackStack("").commit()
+        transaction.replace(R.id.fragment, fragment).addToBackStack("")
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .commit()
     }
     private fun selectImage(){
 

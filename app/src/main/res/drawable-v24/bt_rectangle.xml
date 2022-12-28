@@ -10,7 +10,7 @@ android:layout_width="wrap_content">
         <corners android:radius="24dp" />
         <stroke
             android:width="2dp"
-            android:color="#7C99E4"
+            android:color="@color/white"
             />
     </shape>
 </item>

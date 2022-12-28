@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="350dp"
     android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center"
     android:layout_marginTop="10dp"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
@@ -97,18 +97,26 @@
 
         </LinearLayout>
 
-        <Button
-            app:backgroundTint="@null"
-            android:id="@+id/button"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="32sp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="40dp"
-            android:textSize="8sp"
-            android:text="Confirm"
-            android:fontFamily="@font/roboto_regular"
+            android:orientation="vertical">
 
-            />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Close"
+                android:background="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="11sp"
+                app:backgroundTint="@null" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
